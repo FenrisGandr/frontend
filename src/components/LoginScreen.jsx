@@ -9,7 +9,14 @@ const uiConfig = {
   signInFlow: "popup",
   signInSuccessUrl: "/dashboard",
   // We will display Google and Facebook as auth providers.
-  signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
+  signInOptions: [
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      disableSignUp: { status: true },
+      signInOptions:
+        firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
+    },
+  ],
 };
 
 function LoginScreen() {
