@@ -1,30 +1,20 @@
-import { useEffect, useState } from "react";
-import { Route, Switch } from "wouter";
 import "./App.css";
-import { firebaseAuth } from "./auth";
 import Dashboard from "./components/Dashboard";
-import LoginScreen from "./components/LoginScreen";
+import Signin from "./components/Signin";
+import Signup from "./components/Signup";
+import Home from "./components/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [user, setUser] = useState(firebaseAuth.currentUser);
-
-  useEffect(() => {
-    setUser(firebaseAuth.currentUser);
-  }, [user]);
-
   return (
-    <Switch>
-      <Route path="/login" component={LoginScreen} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route>
-        <div></div>
-        <h1>Radiologist Archive</h1>
-        <div className="card">
-          {user && <p>Welcome, {user.email}</p>}
-          <a href="/login">Go to Login screen</a>
-        </div>
-      </Route>
-    </Switch>
+    <BrowserRouter>
+      <Routes>
+        <Route index Component={Home} />
+        <Route path="/dashboard" Component={Dashboard} />
+        <Route path="/signin" Component={Signin} />
+        <Route path="/signup" Component={Signup} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
