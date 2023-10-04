@@ -1,6 +1,6 @@
 const API_URL =
   import.meta.env.MODE === "production"
-    ? "https://dev-radiologyarchive.com"
+    ? "https://radiologyarchive.com"
     : "https://dev-api.radiologyarchive.com";
 
 async function signInWithEmailAndPasswordLocally(email, password) {
