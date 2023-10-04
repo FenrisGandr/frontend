@@ -1,7 +1,6 @@
-import { AuthErrorCodes, createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { firebaseAuth } from "../auth";
+import { signUpWithEmailAndPasswordLocally } from "../api.js";
 
 function Signup() {
   const [input, setInput] = useState({ email: "", password: "" });
@@ -14,23 +13,15 @@ function Signup() {
     let email = input.email.toLowerCase().trim();
     let password = input.password;
 
-    createUserWithEmailAndPassword(firebaseAuth, email, password)
-      .then((_userCredential) => {
-        alert("Account created successfully!");
-        setTimeout(() => {
-          navigate("/signin");
-        }, 1000);
-      })
-      .catch((err) => {
-        if (err.code === AuthErrorCodes.WEAK_PASSWORD) {
-          setError("The password is too weak.");
-        } else if (err.code === AuthErrorCodes.EMAIL_EXISTS) {
-          setError("The email address is already in use.");
+    signUpWithEmailAndPasswordLocally(email, password)
+      .then((data) => {
+        if (data.errors) {
+          alert(data.errors[0].msg);
         } else {
-          console.log(err.code);
-          alert(err.code);
+          navigate("/dashboard");
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (e) => {
