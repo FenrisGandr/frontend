@@ -1,7 +1,6 @@
-import { AuthErrorCodes, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { firebaseAuth } from "../auth";
+import { signInWithEmailAndPasswordLocally } from "../api.js";
 
 function Signin() {
   const [input, setInput] = useState({ email: "", password: "" });
@@ -14,21 +13,15 @@ function Signin() {
     let email = input.email.toLowerCase().trim();
     let password = input.password;
 
-    signInWithEmailAndPassword(firebaseAuth, email, password)
-      .then((_userCredential) => {
-        navigate("/dashboard");
-      })
-      .catch((err) => {
-        if (
-          err.code === AuthErrorCodes.INVALID_PASSWORD ||
-          err.code === AuthErrorCodes.USER_DELETED
-        ) {
-          setError("The email address or password is incorrect");
+    signInWithEmailAndPasswordLocally(email, password)
+      .then((data) => {
+        if (data.errors) {
+          alert(data.errors[0].msg);
         } else {
-          console.log(err.code);
-          alert(err.code);
+          navigate("/dashboard");
         }
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (e) => {
