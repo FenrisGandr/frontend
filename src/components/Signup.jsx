@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Signpage.css";
 import { useNavigate } from "react-router-dom";
 import { signUpWithEmailAndPasswordLocally } from "../api.js";
 
@@ -33,8 +34,10 @@ function Signup() {
 
   return (
     <div>
+      <div class="border"></div>
       <form autoComplete="off" className="form" onSubmit={handleSubmit}>
-        <h1>Sign Up</h1>
+        <h1>RadiologyArchive</h1>
+        <h2>Sign Up</h2>
         <div className="form-row">
           <div className="form-label">
             <label htmlFor="email">
