@@ -13,7 +13,7 @@ function Home() {
 
   return (
     <div>
-      <h1>Radiologist Archive</h1>
+      <h1>Radiologist Archive!</h1>
       <div className="card">
         {user && <p>Welcome, {user.email}</p>}
         <a href="/signin">Go to signin screen</a>
