@@ -33,8 +33,9 @@ function Signin() {
 
   return (
     <div>
+      <div class="border"></div>
       <form autoComplete="off" className="form" onSubmit={handleSubmit}>
-        <h1>Sign In</h1>
+        <h2>Sign In</h2>
         <div className="form-row">
           <div className="form-label">
             <label htmlFor="email">
