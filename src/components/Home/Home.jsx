@@ -49,14 +49,14 @@ function Home() {
               <img src={doctor2} className="doctorimage"/>
               <div className="doctordetails">
               <span className ="doctornames">Dr. Benjamin Patel</span>
-              <span>Specialization: Diagnostic Radiology</span>
+              <span>Specialization: Neuroradiology</span>
               </div>
               </li>
             <li className="doctorcontainer">
               <img src={doctor3} className="doctorimage"/>
               <div className="doctordetails">
               <span className ="doctornames">Dr. Emily Rodriguez</span>
-              <span>Specialization: Diagnostic Radiology</span>
+              <span>Specialization: Pediatric Radiology</span>
               </div>
             </li>
             </ul>
@@ -65,21 +65,21 @@ function Home() {
               <img src={doctor4} className="doctorimage"/>
               <div className="doctordetails">
               <span className ="doctornames">Dr. James Anderson</span>
-              <span>Specialization: Diagnostic Radiology</span>
+              <span>Specialization: Musculoskeletal Radiology</span>
               </div>
             </li>
             <li className="doctorcontainer">
             <img src={doctor5} className="doctorimage"/>
               <div className="doctordetails">
               <span className ="doctornames">Dr. Olivia Chang</span>
-              <span>Specialization: Diagnostic Radiology</span>
+              <span>Specialization: Thoracic Radiology</span>
               </div>
             </li>
             <li className="doctorcontainer">
               <img src={doctor6} className="doctorimage"/>
               <div className="doctordetails">
               <span className ="doctornames">Dr. Michael Nguyen</span>
-              <span>Specialization: Diagnostic Radiology</span>
+              <span>Specialization: Abdominal Radiology</span>
               </div>
             </li>
           </ul>

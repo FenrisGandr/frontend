@@ -14,7 +14,7 @@ const HomeNavBar = () => {
               <span className="buttonText">Returning User?</span>
               <Dropdown>
                   <Dropdown.Toggle variant="primary" id="loginDropdown">
-                    Login
+                    Log In
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
