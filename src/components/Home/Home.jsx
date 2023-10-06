@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { firebaseAuth } from "../../auth.js";
-import NavBar from "../navbars/NavBar.jsx";
+import HomeNavBar from "../navbars/HomeNavBar.jsx";
 import docvisit from '../../assets/docvisit.png'
 import doctor1 from '../../assets/doctor1.png'
 import doctor2 from '../../assets/doctor2.png'
@@ -23,7 +23,7 @@ function Home() {
 
   return (
     <div>
-      <NavBar/>
+      <HomeNavBar/>
       <div className="hero">
         <div className="leftContainer">
           <h1>Get your medical scan interpreted today.</h1>

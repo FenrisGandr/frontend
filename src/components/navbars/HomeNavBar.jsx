@@ -1,8 +1,8 @@
 import React from 'react';
-import './NavBar.css';
+import './HomeNavBar.css';
 import RadioArchiveLogo from '../../assets/RadioArchiveLogo.png';
 import Dropdown from 'react-bootstrap/Dropdown';
-const NavBar = () => {
+const HomeNavBar = () => {
     return (
         <nav className="navbar">
             <a href="/" className="navbar-logo">
@@ -18,9 +18,9 @@ const NavBar = () => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="/patientsignin">Patient</Dropdown.Item>
-                    <Dropdown.Item href="/physiciansignin">Physician</Dropdown.Item>
-                    <Dropdown.Item href="/radiologistsignin">Radiologist</Dropdown.Item>
+                    <Dropdown.Item href="/signin">Patient</Dropdown.Item>
+                    <Dropdown.Item href="/signin">Physician</Dropdown.Item>
+                    <Dropdown.Item href="/signin">Radiologist</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>
             </div>
@@ -32,4 +32,4 @@ const NavBar = () => {
         </nav>
       );
     };
-export default NavBar
+export default HomeNavBar
