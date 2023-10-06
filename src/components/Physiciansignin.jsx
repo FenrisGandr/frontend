@@ -1,7 +1,10 @@
 import Signin from "./Signin";
+import './SigninPortals.css'
+import { useNavigate } from "react-router-dom";
 import RadioArchiveLogo from '../assets/RadioArchiveLogo.png'
 function Physiciansignin () {
-
+    const navigate = useNavigate();
+    
     const physicianSpan = {
         color: '#0D6EFD',
         paddingRight: '5px',
@@ -25,7 +28,7 @@ function Physiciansignin () {
                 <Signin />
                 <div className="option">
                         <a onClick={() => navigate("/signup")}>New User?</a>
-                        <button><a onClick={() => navigate("/signup")}>Sign Up</a></button>
+                        <a onClick={() => navigate("/signup")}><button>Sign Up</button></a>
                 </div>
             </div>
         </div>
