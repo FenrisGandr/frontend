@@ -1,0 +1,83 @@
+.hero{
+    display: flex;
+    flex-direction: row;
+    background-color: #7749F8;
+}
+
+.leftContainer {
+    padding-top: 2%;
+    padding-left: 2%;
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+}
+
+.leftContainer h1 {
+    color: white;
+}
+
+.leftContainer p {
+
+    color: white;
+}
+
+.leftContainer a {
+    width: 20%;
+}
+
+.hero img {
+    width: 450px;
+    height: auto;
+    margin: 5%;
+}
+
+.radiologistspictures{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.radiologistspictures h3 {
+    text-align: center;
+    padding-bottom:5px ;
+    border-bottom: 3px solid #0D6EFD;
+    width: 350px;
+    color: #0D6EFD;
+}
+
+.headertext{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rows {
+    display: flex;
+    justify-content: center;
+}
+
+li{
+    margin: 50px;
+    padding-right: 100px;
+    padding-left: 100px;
+}
+.doctorcontainer {
+    display: flex;
+    align-items: center;
+}
+.doctorimage{
+    max-width: 100px;
+    width: 100px;
+    height: auto;
+    margin-right: 25px;
+}
+.doctordetails{
+    display: flex;
+    flex-direction: column;
+}
+.doctornames{
+    font-weight: bold;
+}
+

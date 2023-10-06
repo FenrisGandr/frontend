@@ -1,0 +1,76 @@
+.navbar{
+    display: flex;
+    background-color: white;
+    /* justify-content: space-between; */
+    width: 100%;
+}
+.container{
+    display: flex;
+    width: 23vw;
+    margin: 0;
+    padding-right: 3%;
+    flex-wrap: nowrap;
+}
+
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttonText{
+    color: #0D6EFD;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.signupContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img{
+    width:75px;
+    height: auto;
+}
+
+.titleSpans{
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+
+#radiology{
+    font-weight: bold;
+    color: #7749F8;
+}
+
+#radiology:hover{
+    color: rgb(98, 33, 160);
+}
+
+#archive{
+    font-weight: bold;
+    color: black;
+}
+
+.navbar-logo{
+    padding-left: 50px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    outline: none;
+    text-decoration: none;
+    flex: 0 0 auto;
+}
+
+
+#loginDropdown{
+   font-weight: bold;
+}
+
+
+.signup{
+    text-decoration: none;
+}
