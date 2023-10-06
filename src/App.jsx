@@ -1,10 +1,9 @@
 import "./App.css";
 import Dashboard from "./components/Dashboard";
-import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import Home from "./components/Home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Patientsignin from "./components/PatientSignIn";
+import Patientsignin from "./components/Patientsignin";
 import Physiciansignin from "./components/Physiciansignin";
 import Radiologistsignin from "./components/Radiologistsignin";
 

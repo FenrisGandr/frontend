@@ -33,7 +33,7 @@ function Signin() {
 
   return (
     <div>
-      <div class="border"></div>
+      <div className="border"></div>
       <form autoComplete="off" className="form" onSubmit={handleSubmit}>
         <h2>Sign In</h2>
         <div className="form-row">
