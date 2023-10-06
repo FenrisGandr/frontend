@@ -18,15 +18,15 @@ const NavBar = () => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="/signin">Patient</Dropdown.Item>
-                    <Dropdown.Item href="/signin">Physician</Dropdown.Item>
-                    <Dropdown.Item href="/signin">Radiologist</Dropdown.Item>
+                    <Dropdown.Item href="/patientsignin">Patient</Dropdown.Item>
+                    <Dropdown.Item href="/physiciansignin">Physician</Dropdown.Item>
+                    <Dropdown.Item href="/radiologistsignin">Radiologist</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>
             </div>
               <div className="signupContainer">
                 <span className='buttonText'>New User?</span>
-                <a href="/Signup" className='btn btn-primary signup'>Sign up</a>
+                <a href="/signup" className='btn btn-primary signup'>Sign up</a>
               </div>
             </div>  
         </nav>
