@@ -1,7 +1,6 @@
 .navbar{
     display: flex;
     background-color: white;
-    /* justify-content: space-between; */
     width: 100%;
 }
 .container{
@@ -46,9 +45,6 @@ img{
     color: #7749F8;
 }
 
-#radiology:hover{
-    color: rgb(98, 33, 160);
-}
 
 #archive{
     font-weight: bold;

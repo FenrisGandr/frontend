@@ -18,9 +18,9 @@ const HomeNavBar = () => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="/signin">Patient</Dropdown.Item>
-                    <Dropdown.Item href="/signin">Physician</Dropdown.Item>
-                    <Dropdown.Item href="/signin">Radiologist</Dropdown.Item>
+                    <Dropdown.Item href="/patientsignin">Patient</Dropdown.Item>
+                    <Dropdown.Item href="/physiciansignin">Physician</Dropdown.Item>
+                    <Dropdown.Item href="/radiologistsignin">Radiologist</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>
             </div>

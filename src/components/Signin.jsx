@@ -31,14 +31,29 @@ function Signin() {
     }));
   };
 
+  const loginButtonStyle={
+    backgroundColor: '#0D6EFD',
+    borderRadius: '3px',
+    width:'190px',
+    border: 'none',
+    color: 'white',
+    height: '35px',
+    marginBottom: '75px',
+    marginTop: '25px'
+  };
+
+  const boldSpan={
+    color: 'black',
+    fontWeight: '600'
+  };
+
   return (
     <div>
-      <div className="border"></div>
       <form autoComplete="off" className="form" onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="form-label">
             <label htmlFor="email">
-              <span>Email</span>
+              <span style={boldSpan}>Email</span>
             </label>
           </div>
           <input
@@ -53,7 +68,7 @@ function Signin() {
         <div className="form-row">
           <div className="form-label">
             <label htmlFor="password">
-              <span>Password</span>
+              <span style={boldSpan}>Password</span>
             </label>
           </div>
           <input
@@ -66,20 +81,14 @@ function Signin() {
           />
         </div>
         <div className="form-row">
-          <div className="btn">
+          <div>
             {error ? <p>{error}</p> : null}
-            <button title="Signin" aria-label="Signin" type="submit">
-              Sign In
+            <button style={loginButtonStyle} title="Signin" aria-label="Signin" type="submit">
+              Log In
             </button>
           </div>
         </div>
       </form>
-      <div className="option">
-        <p>
-          Don't have an account?{" "}
-          <a onClick={() => navigate("/signup")}>Sign Up</a>
-        </p>
-      </div>
     </div>
   );
 }
