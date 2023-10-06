@@ -35,7 +35,6 @@ function Signin() {
     <div>
       <div className="border"></div>
       <form autoComplete="off" className="form" onSubmit={handleSubmit}>
-        <h2>Sign In</h2>
         <div className="form-row">
           <div className="form-label">
             <label htmlFor="email">
