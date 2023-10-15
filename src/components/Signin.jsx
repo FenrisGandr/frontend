@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPasswordLocally } from "../api.js";
+import { useAuth } from "../contexts/AuthContext";
 
 function Signin() {
   const {
@@ -16,20 +16,34 @@ function Signin() {
     },
   });
   const navigate = useNavigate();
+  const { signin } = useAuth();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const email = data.email.toLowerCase().trim();
     const password = data.password;
 
-    signInWithEmailAndPasswordLocally(email, password)
+    await signin(email, password)
       .then((data) => {
         if (data.errors) {
-          setError("root.serverError", { message: data.errors[0].msg });
+          setError("root.serverError", {
+            message: "The email or password is incorrect",
+          });
         } else {
           navigate("/dashboard");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.code === "auth/invalid-login-credentials") {
+          setError("root.serverError", {
+            message: "The email or password is incorrect",
+          });
+        } else {
+          setError("root.serverError", {
+            message: "Something went wrong",
+          });
+        }
+        console.error(err);
+      });
   };
 
   const loginButtonStyle = {
@@ -41,6 +55,7 @@ function Signin() {
     height: "35px",
     marginBottom: "75px",
     marginTop: "25px",
+    alignSelf: "center",
   };
 
   const boldSpan = {
@@ -87,17 +102,15 @@ function Signin() {
           {errors.password && <p>{errors.password.message}</p>}
         </div>
         <div className="form-row">
-          <div>
-            {errors.root ? <p>{errors.root.serverError.message}</p> : null}
-            <button
-              style={loginButtonStyle}
-              title="Signin"
-              aria-label="Signin"
-              type="submit"
-            >
-              Log In
-            </button>
-          </div>
+          {errors.root ? <p>{errors.root.serverError.message}</p> : null}
+          <button
+            style={loginButtonStyle}
+            title="Signin"
+            aria-label="Signin"
+            type="submit"
+          >
+            Log In
+          </button>
         </div>
       </form>
     </div>
