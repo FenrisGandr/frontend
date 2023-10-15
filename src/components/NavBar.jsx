@@ -8,9 +8,14 @@ import { useAuth } from "../contexts/AuthContext";
 import "./NavBar.css";
 
 const NavBar = () => {
+  const location = useLocation();
+
+  if (location.pathname === "/signin" || location.pathname === "/signup") {
+    return null;
+  }
+
   const { role, user, signout } = useAuth();
   const [showTitle, setShowTitle] = React.useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
 
   const roleColor = (role) => {
@@ -42,10 +47,6 @@ const NavBar = () => {
   };
 
   React.useEffect(() => {
-    if (location.pathname === "/signin" || location.pathname === "/signup") {
-      return null;
-    }
-
     if (location.pathname === "/dashboard") {
       setShowTitle(true);
     }
