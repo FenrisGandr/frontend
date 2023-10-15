@@ -1,18 +1,37 @@
 import React from "react";
+import { Nav, Navbar } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useNavigate } from "react-router-dom";
-import RadioArchiveLogo from "../../assets/RadioArchiveLogo.png";
-import person from "../../assets/person.png";
-import { useAuth } from "../../contexts/AuthContext";
-import "./HomeNavBar.css";
-import { Navbar } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
+import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
+import person from "../assets/person.png";
+import { useAuth } from "../contexts/AuthContext";
+import "./NavBar.css";
 
-const HomeNavBar = () => {
-  const { user, signout } = useAuth();
+const NavBar = () => {
+  const { role, user, signout } = useAuth();
+  const [showTitle, setShowTitle] = React.useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const customButtonStyle = {
-    backgroundColor: "#479F76",
+  const roleColor = (role) => {
+    switch (role) {
+      case "Patient":
+        return "#479f76";
+      case "Physician":
+        return "#0D6EFD";
+      case "Radiologist":
+        return "#DC3545";
+      default:
+        return "#479f76";
+    }
+  };
+
+  const backgroundStyle = {
+    backgroundColor: roleColor(role),
+  };
+  const titleStyle = {
+    fontSize: "2rem",
+    color: roleColor(role),
   };
   const DropdownLogo = {
     width: "2rem",
@@ -21,6 +40,16 @@ const HomeNavBar = () => {
   const boldName = {
     fontWeight: "500",
   };
+
+  React.useEffect(() => {
+    if (location.pathname === "/signin" || location.pathname === "/signup") {
+      return null;
+    }
+
+    if (location.pathname === "/dashboard") {
+      setShowTitle(true);
+    }
+  }, [location.pathname]);
 
   const LoggedOutDropdown = () => {
     return (
@@ -69,22 +98,31 @@ const HomeNavBar = () => {
 
   const LoggedInDropdown = () => {
     return (
-      <Dropdown align="end" style={{ marginRight: "50px" }}>
-        <Dropdown.Toggle style={customButtonStyle} id="loginDropdown">
-          <img src={person} style={DropdownLogo} />
-        </Dropdown.Toggle>
+      <>
+        {showTitle && (
+          <Nav className="mr-auto">
+            <h2>
+              <span style={titleStyle}>{role}</span> Portal
+            </h2>
+          </Nav>
+        )}
+        <Dropdown align="end" style={{ marginRight: "50px" }}>
+          <Dropdown.Toggle style={backgroundStyle} id="loginDropdown">
+            <img src={person} style={DropdownLogo} />
+          </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          <Dropdown.ItemText style={boldName}>
-            {user.displayName || user.email}
-          </Dropdown.ItemText>
-          <Dropdown.Item href="/dashboard">Profile</Dropdown.Item>
-          <Dropdown.Item href="TODO" disabled={true}>
-            Notifications
-          </Dropdown.Item>
-          <Dropdown.Item onClick={signout}>Log Out</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+          <Dropdown.Menu>
+            <Dropdown.ItemText style={boldName}>
+              {user.displayName || user.email}
+            </Dropdown.ItemText>
+            <Dropdown.Item href="/dashboard">Profile</Dropdown.Item>
+            <Dropdown.Item href="TODO" disabled={true}>
+              Notifications
+            </Dropdown.Item>
+            <Dropdown.Item onClick={signout}>Log Out</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </>
     );
   };
 
@@ -106,4 +144,4 @@ const HomeNavBar = () => {
     </Navbar>
   );
 };
-export default HomeNavBar;
+export default NavBar;

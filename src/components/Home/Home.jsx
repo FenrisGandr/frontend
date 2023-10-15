@@ -7,13 +7,11 @@ import doctor5 from '../../assets/doctor5.png';
 import doctor6 from '../../assets/doctor6.png';
 import docvisit from '../../assets/docvisit.png';
 import WebFooter from "../WebFooter.jsx";
-import HomeNavBar from "../navbars/HomeNavBar.jsx";
 
 import './Home.css';
 function Home() {
   return (
     <div>
-      <HomeNavBar/>
       <div className="hero">
         <div className="leftContainer">
           <h1>Get your medical scan interpreted today.</h1>

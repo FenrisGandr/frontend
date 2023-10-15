@@ -11,7 +11,7 @@ const API_URL =
 const FirebaseAuthContext = React.createContext(null);
 
 export function FirebaseAuthProvider({ children }) {
-  const [role, setRole] = React.useState("Patient");
+  const [role, setRole] = React.useState();
   const [user, setUser] = React.useState();
   const [loading, setLoading] = React.useState(true);
 

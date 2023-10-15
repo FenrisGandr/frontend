@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function GreetingCard({ role, name }) {
+export default function GreetingCard({ name }) {
   const greeting = `Welcome, ${name}!`;
 
   const greetingStyle = {
