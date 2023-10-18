@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import { firebaseAuth, signInWithEmailAndPassword } from "../auth.js";
-
-const MODE = import.meta.env.VITE_VERCEL_ENV ?? import.meta.env.MODE;
-
-const API_URL =
-  MODE === "production"
-    ? "https://api.radiologyarchive.com"
-    : "https://dev-api.radiologyarchive.com";
+import {
+  firebaseAuth,
+  getIdToken,
+  signInWithEmailAndPassword,
+} from "../auth.js";
+import { API_URL } from "../constants.js";
 
 const FirebaseAuthContext = React.createContext(null);
 
@@ -64,31 +62,34 @@ export function FirebaseAuthProvider({ children }) {
       setUser(user);
       setLoading(false);
 
-      if (user) {
-        try {
-          await user.getIdToken().then((token) => {
-            setUser((prevUser) => ({ ...prevUser, accessToken: token }));
-            fetch(API_URL + "/api/user/me", {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
-              },
-              cache: "no-cache",
-            })
-              .then((res) => res.json())
-              .then((data) => setRole(data.role));
-          });
-        } catch (err) {
-          console.log(err);
-        }
-
-        // Schedule token renewal before it expires (e.g., 58 minutes)
-        const renewalInterval = setInterval(renewToken, 58 * 60 * 1000);
-
-        return () => {
-          clearInterval(renewalInterval);
-        };
+      try {
+        await getIdToken(user).then((token) => {
+          setUser((prevUser) => ({ ...prevUser, accessToken: token }));
+          fetch(API_URL + "/api/user/me", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            cache: "no-cache",
+          })
+            .then((res) => res.json())
+            .then((data) => setRole(data.role));
+        });
+      } catch (err) {
+        if (
+          err.message ===
+          "Cannot read properties of null (reading 'getIdToken')"
+        )
+          return;
+        console.log(err.message);
       }
+
+      // Schedule token renewal before it expires (55 minutes)
+      const renewalInterval = setInterval(renewToken, 55 * 60 * 1000);
+
+      return () => {
+        clearInterval(renewalInterval);
+      };
     });
 
     return unsubscribe;
