@@ -95,7 +95,7 @@ function EditProfile(props) {
     }
 
     // Update both profile image and bio
-    if (profile_image_url && previewImageURL) {
+    if (previewImageURL) {
       const file_name = uuid();
       const storage = getStorage();
       const storageRef = ref(storage, `${MODE}/${file_name}`);
