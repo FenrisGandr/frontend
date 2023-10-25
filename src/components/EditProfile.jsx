@@ -29,7 +29,8 @@ function EditProfile(props) {
   const [isEditing, setIsEditing] = React.useState(false);
   const [newBio, setNewBio] = React.useState(bio);
   const [profileImage, setProfileImage] = React.useState();
-  const [previewImageURL, setPreviewImageURL] = React.useState(profile_image_url);
+  const [previewImageURL, setPreviewImageURL] =
+    React.useState(profile_image_url);
   const navigate = useNavigate();
   const [uploading, setUploading] = React.useState(false);
   const bioFormRef = React.useRef(null);
@@ -83,7 +84,6 @@ function EditProfile(props) {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            setUploading(false);
             alert("Saved profile successfully!");
             setTimeout(() => navigate(0), 500);
           }
@@ -91,11 +91,10 @@ function EditProfile(props) {
         .catch((error) => {
           console.log("Error getting image URL: ", error);
           setUploading(false);
-        });
-    }
-
-    // Update both profile image and bio
-    if (previewImageURL) {
+        })
+        .finally(() => setUploading(false));
+    } else if (previewImageURL) {
+      // Update both profile image and bio
       const file_name = uuid();
       const storage = getStorage();
       const storageRef = ref(storage, `${MODE}/${file_name}`);
@@ -124,7 +123,7 @@ function EditProfile(props) {
               await fetch(`${API_URL}/api/user/profile`, {
                 method: "PUT",
                 body: JSON.stringify({
-                  profile_image_url: downloadURL,
+                  profile_image_url: previewImageURL || downloadURL,
                   bio: newBio,
                 }),
                 headers: {
@@ -135,7 +134,6 @@ function EditProfile(props) {
                 .then((res) => res.json())
                 .then((data) => {
                   if (data.success) {
-                    setUploading(false);
                     alert("Saved profile successfully!");
                     setTimeout(() => navigate(0), 500);
                   }
@@ -144,7 +142,8 @@ function EditProfile(props) {
             .catch((error) => {
               console.log("Error getting image URL: ", error);
               setUploading(false);
-            });
+            })
+            .finally(() => setUploading(false));
         }
       );
     }
