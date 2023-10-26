@@ -35,8 +35,7 @@
     display: block;
     justify-content: center;
     align-items: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    margin: '3rem',
 }
 
 .radiologistspictures h3 {

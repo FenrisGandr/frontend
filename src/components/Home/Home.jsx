@@ -9,7 +9,21 @@ import docvisit from '../../assets/docvisit.png';
 import WebFooter from "../WebFooter.jsx";
 
 import './Home.css';
+
 function Home() {
+  const radiologistDiv = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:'auto',
+    marginBottom:'3rem'
+  }
+  const radiologistButtonStyle = {
+    height:'3rem',
+    width: 'auto',
+    fontSize: '20px'
+   }
+
   return (
     <div>
       <div className="hero">
@@ -71,6 +85,10 @@ function Home() {
               </div>
             </li>
           </ul>
+          
+        </div>
+        <div style={radiologistDiv}>
+            <a href="secondopinion"><button className="btn btn-primary" style={radiologistButtonStyle} src="signup">View Radiologists</button></a>
         </div>
       </div>
       <WebFooter />
