@@ -1,5 +1,5 @@
 import React from "react";
-import SecondOpinionBanner from "./second opinion components/SecondOpinionBanner";
+import Banner from "./Banner";
 import WebFooter from "./WebFooter";
 import { useAuth } from "../contexts/AuthContext";
 import SecondOpinionCenter from "./second opinion components/SecondOpinionCenter";
@@ -43,7 +43,7 @@ const selectContainer = {
 const { user, role } = useAuth();
 
 return<>
-    <SecondOpinionBanner/>
+    <Banner text="Radiologist Center"/>
     <div style={firstDivStyle}>
         <h2 style={headerStyle}>Our Radiologists!</h2>
         <br></br>

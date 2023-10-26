@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SecondOpinionBanner() {
+export default function Banner( {text} ) {
 
   const greetingStyle = {
     paddingLeft: "50px",
@@ -12,5 +12,5 @@ export default function SecondOpinionBanner() {
     fontSize: "50px",
   };
 
-  return <div style={greetingStyle}>Radiologist Center</div>;
+  return <div style={greetingStyle}>{text}</div>;
 }
