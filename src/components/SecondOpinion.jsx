@@ -40,7 +40,7 @@ const selectContainer = {
 }
 
 
-const { role } = useAuth();
+const { user, role } = useAuth();
 
 return<>
     <SecondOpinionBanner/>
@@ -54,7 +54,7 @@ return<>
     </div>
     <div style={secondDivStyle}>
 
-        {role === 'Patient' ? 
+        {role === "Patient" ? 
         <form action="" >
             <h4>Select the radiologist that is best for You!</h4>
             <div style={selectContainer}>
@@ -69,11 +69,13 @@ return<>
                 </select>
             </div>
             <button style={buttonStyle}>Go to Payment</button>
-        </form> : 
+        </form>
+         : <></>}
         
-        <a href="signup">
-            <button className="btn btn-primary" style={signupButtonStyle}>Sign up here</button>
-        </a>}
+        {user ? <></>:
+            <a href="signup">
+                <button className="btn btn-primary" style={signupButtonStyle}>Sign up here</button>
+             </a>}
          
 
 
