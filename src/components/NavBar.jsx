@@ -2,11 +2,10 @@ import React from "react";
 import { Nav, Navbar, NavbarText } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
 import person from "../assets/person.png";
 import { useAuth } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
 import "./NavBar.css";
 
 const SHOW_TITLE_PATHS = ["/dashboard", "/profile"];
@@ -29,12 +28,13 @@ const NavBar = () => {
       case "Physician":
         return "#0D6EFD";
       case "Radiologist":
-        return "#DC3545";
+        return "#E35D6A";
     }
   };
 
   const backgroundStyle = {
     backgroundColor: roleColor(role),
+    border: roleColor(role),
   };
   const titleStyle = {
     fontSize: "2rem",
@@ -140,7 +140,7 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar className="navbar">
+    <Navbar className="navbar shadow-sm">
       <Navbar.Brand
         href="/"
         style={{ fontSize: "2.25rem", marginLeft: "30px" }}
