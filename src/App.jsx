@@ -25,7 +25,7 @@ function App() {
             <Route path="signin" Component={SigninForm} />
             <Route path="signup" Component={Signup} />
             <Route path="secondopinion" Component={SecondOpinion} />
-            <Route path="viewpatients" Component={ViewPatients}/>
+            <Route path="patients" Component={ViewPatients}/>
             <Route
               path="upload"
               element={

@@ -81,7 +81,7 @@ export default function PortalCenter({ role }) {
         description:
           "Access the list of patients assigned to you for radiology services.",
         btnText: "View Patients",
-        btnLink: "/viewpatients", // Define the URL for viewing patients
+        btnLink: "/patients", // Define the URL for viewing patients
       },
     ],
   };
