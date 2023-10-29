@@ -76,6 +76,13 @@ export default function PortalCenter({ role }) {
         btnText: "View Notifications",
         btnLink: "/notifications",
       },
+      {
+        title: "View Your List of Patients!",
+        description:
+          "Access the list of patients assigned to you for radiology services.",
+        btnText: "View Patients",
+        btnLink: "/viewpatients", // Define the URL for viewing patients
+      },
     ],
   };
 
