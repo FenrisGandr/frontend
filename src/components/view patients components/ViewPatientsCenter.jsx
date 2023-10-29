@@ -29,7 +29,8 @@ function ViewPatientsCenter(){
     ]
     return patients.map((item,index) =>{
         return(
-            <ViewPatientsSection 
+            <ViewPatientsSection
+                key={index}
                 profileImage={item.profileImage}
                 patientName={item.patientName}
                 patientEmail={item.patientEmail}
@@ -38,7 +39,7 @@ function ViewPatientsCenter(){
 
             />
         )
-        
+
     })
 };
 
