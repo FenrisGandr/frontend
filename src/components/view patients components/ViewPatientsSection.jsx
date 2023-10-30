@@ -1,10 +1,20 @@
+import React from "react";
 import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, additionalText}) => {
     const [showAdditionalText, setShowAdditionalText] = useState(false);
     
     const toggleAdditionalText = () => {
         setShowAdditionalText(!showAdditionalText);
     };
+    const { role } = useAuth();
+    const roleColor = (role) => {
+        if (role == "Radiologist") {
+            return "#E35D6A";
+        }
+        return "#0D6EFD"; // Physician color
+    }
+
     const wrapperStyle ={
         border: "1.5px solid grey",
         //margin: '.2rem',
@@ -35,7 +45,7 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
         display: 'center',
         borderRadius: '5px',
         marginRight: '2rem', 
-        backgroundColor:'rgb(227,93,106',
+        backgroundColor: roleColor(role),
     }
     const additionalTextStyle = {
         fontSize: '16px',
@@ -47,6 +57,7 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
         flexDirection: 'column',
         margin: '10px',
     }
+
     return (
     <div style={wrapperStyle}>
     <div style={initialContainer}> 
@@ -58,7 +69,11 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
              <p>DOB: {dob} </p>
              <p>{patientEmail}</p>
          </div>
-        <button style={buttonStyle} onClick={toggleAdditionalText}>{showAdditionalText ? 'View  ':'View '} </button>
+         <button style={buttonStyle} onClick={toggleAdditionalText}>{showAdditionalText ? 'View  ':'View '} </button>
+            {role === "Physician" ?
+            <a href="upload"><button style={buttonStyle}>Add Image</button></a>
+            : <></>
+            }
         </div>
         {showAdditionalText && (
        <div style={additionalTextDiv}>

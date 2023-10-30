@@ -10,6 +10,7 @@ import SigninForm from "./components/SigninForm";
 import Signup from "./components/Signup";
 import SecondOpinion from "./components/SecondOpinion";
 import ViewPatients from "./components/ViewPatients";
+import AddPatient from "./components/AddPatient";
 import { FirebaseAuthProvider } from "./contexts/AuthContext";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             <Route path="signup" Component={Signup} />
             <Route path="secondopinion" Component={SecondOpinion} />
             <Route path="patients" Component={ViewPatients}/>
+            <Route path="addpatient" Component={AddPatient} />
             <Route
               path="upload"
               element={

@@ -2,11 +2,20 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import Banner from "./Banner";
 import WebFooter from "./WebFooter";
 import ViewPatientsCenter from "./view patients components/ViewPatientsCenter";
 
 function ViewPatients() {
+  const { role } = useAuth();
+  const roleColor = (role) => {
+      if (role == "Radiologist") {
+          return "#E35D6A";
+      }
+      return "#0D6EFD"; // Physician color
+  }
+
   const firstDivStyle = {
     margin: "4rem",
   };
@@ -19,7 +28,7 @@ function ViewPatients() {
   const buttonStyle = {
     width: "auto",
     height: "40px",
-    backgroundColor: "rgb(227,93,106)",
+    backgroundColor: roleColor(role),
     color: "white",
     borderRadius: "5px",
     fontSize: "16px",
