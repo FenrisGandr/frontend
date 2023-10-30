@@ -1,18 +1,27 @@
 import React from "react";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useLocation, useNavigate } from "react-router-dom";
+
 const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, additionalText}) => {
+    const navigate = useNavigate();
+
     const [showAdditionalText, setShowAdditionalText] = useState(false);
     
     const toggleAdditionalText = () => {
         setShowAdditionalText(!showAdditionalText);
     };
     const { role } = useAuth();
+
     const roleColor = (role) => {
         if (role == "Radiologist") {
             return "#E35D6A";
         }
         return "#0D6EFD"; // Physician color
+    }
+
+    function handleClick(image) {
+        navigate("/imageview", { state: { image }})
     }
 
     const wrapperStyle ={
@@ -80,10 +89,10 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
         <div>
         <p style={additionalTextStyle}>Medical Images: </p>
         </div>
-         {additionalText.map((item, index)=> {
+         {additionalText.map((item, index) => {
             if (item.includes(".png") || item.includes(".jpg") || item.includes(".jpeg") || item.includes(".gif")) {
             return (
-            <img key={index} src={item} alt={`Image ${index}`} style={{ width: "200px", height: "auto", marginBottom: "10px" }} />
+            <img onClick={() => {handleClick({img: item})}} key={index} src={item} alt={`Image ${index}`} style={{ width: "200px", height: "auto", marginBottom: "10px", cursor: "pointer" }} />
             );
             } 
             else {    

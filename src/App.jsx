@@ -12,6 +12,8 @@ import SecondOpinion from "./components/SecondOpinion";
 import ViewPatients from "./components/ViewPatients";
 import AddPatient from "./components/AddPatient";
 import { FirebaseAuthProvider } from "./contexts/AuthContext";
+import ImageLibrary from "./components/ImageLibrary";
+import ImageView from "./components/ImageView";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
             <Route path="secondopinion" Component={SecondOpinion} />
             <Route path="patients" Component={ViewPatients}/>
             <Route path="addpatient" Component={AddPatient} />
+            <Route path="imagelibrary" Component={ImageLibrary} />
+            <Route path="imageview" Component={ImageView} />
             <Route
               path="upload"
               element={

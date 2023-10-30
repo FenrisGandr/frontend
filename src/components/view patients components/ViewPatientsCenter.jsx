@@ -4,13 +4,16 @@ import patient2 from '../../assets/spine-xray.png';
 import ViewPatientsSection from "./ViewPatientsSection";
 
 function ViewPatientsCenter(){
+
+    // const patients = await getPatientsByID(userId); 
+
     const patients = [
         {
             profileImage: patient1,
             patientName: "John Doe",
             patientEmail:"JohnDoe@email.com",
             dob:"01/01/1999",
-            additionalText:[ patient2],
+            additionalText:[ patient2, patient1 ],
         },
         {
             profileImage: patient1,

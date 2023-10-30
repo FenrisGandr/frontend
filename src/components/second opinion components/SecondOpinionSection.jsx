@@ -56,7 +56,7 @@ const SecondOpinionSection = ({picture,doctorAndTitle, specialization, additiona
                 <p style={doctorTitleStyle}>{doctorAndTitle}</p>
                 <p>Specialization: {specialization}</p>
             </div>
-                <button style={buttonStyle} onClick={toggleAdditionalText}>{showAdditionalText ? '^':'v'} </button>
+                <button style={buttonStyle} onClick={toggleAdditionalText}> {showAdditionalText ? '^':'v'} </button>
             
         </div>
         {showAdditionalText && (
