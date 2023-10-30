@@ -119,7 +119,7 @@ const NavBar = () => {
             <img src={person} style={DropdownLogo} />
           </Dropdown.Toggle>
 
-          <Dropdown.Menu>
+          <Dropdown.Menu style={{ width: "max-content" }}>
             <Dropdown.ItemText style={boldName}>
               {user.displayName || user.email}
             </Dropdown.ItemText>
