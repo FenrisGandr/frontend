@@ -21,3 +21,9 @@
 .form-row h1 {
   white-space: nowrap;
 }
+
+.list-group-item.active {
+  color: inherit;
+  background-color: transparent;
+  border-color: #7749F8;
+}
