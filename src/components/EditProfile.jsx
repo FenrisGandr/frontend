@@ -123,7 +123,7 @@ function EditProfile(props) {
               await fetch(`${API_URL}/api/user/profile`, {
                 method: "PUT",
                 body: JSON.stringify({
-                  profile_image_url: previewImageURL || downloadURL,
+                  profile_image_url: downloadURL,
                   bio: newBio,
                 }),
                 headers: {

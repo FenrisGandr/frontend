@@ -125,7 +125,6 @@ function Signup() {
                     </option>
                     <option value="PATIENT">Patient</option>
                     <option value="PHYSICIAN">Physician</option>
-                    <option value="RADIOLOGIST">Radiologist</option>
                   </Form.Select>
                 </Form.Group>
               </Col>
