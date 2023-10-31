@@ -123,13 +123,15 @@ export default function ImageView() {
             </button>
           </div>
           {showNote &&
-            (image.authors > 0 ? (
+            (image.authors ? (
               image.authors.map((author) => {
                 if (author.role === "PHYSICIAN") {
                   return (
                     <div key={author.uid} style={opinionStyle}>
-                      {author.note}
+                      <p>{author.note}</p>
+                      <span>By: {author.full_name}</span>
                     </div>
+
                   );
                 }
               })
@@ -151,14 +153,15 @@ export default function ImageView() {
           {showOpinions &&
             (image.authors && image.authors.length > 0 ? (
               image.authors.map((author, index) => {
-                return (
-                  <div key={author.uid} style={opinionStyle}>
-                    <p>
-                      Opinion {index + 1}: {author.note}
-                    </p>
-                    <span>By: {author.full_name}</span>
-                  </div>
-                );
+                if (author.role === "RADIOLOGIST")
+                  return (
+                    <div key={author.uid} style={opinionStyle}>
+                      <p>
+                        Opinion {index + 1}: {author.note}
+                      </p>
+                      <span>By: {author.full_name}</span>
+                    </div>
+                  );
               })
             ) : (
               <div style={opinionStyle}>No opinions</div>
