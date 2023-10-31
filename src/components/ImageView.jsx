@@ -151,13 +151,13 @@ export default function ImageView() {
             </button>
           </div>
           {showOpinions &&
-            (image.authors && image.authors.length > 0 ? (
+            (image.authors && image.authors.length > 1 ? (
               image.authors.map((author, index) => {
                 if (author.role === "RADIOLOGIST")
                   return (
                     <div key={author.uid} style={opinionStyle}>
                       <p>
-                        Opinion {index + 1}: {author.note}
+                        Opinion {index}: {author.note}
                       </p>
                       <span>By: {author.full_name}</span>
                     </div>
