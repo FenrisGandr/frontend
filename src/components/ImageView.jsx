@@ -123,7 +123,7 @@ export default function ImageView() {
             </button>
           </div>
           {showNote &&
-            (image.authors ? (
+            (image.authors && image.authors.length > 0? (
               image.authors.map((author) => {
                 if (author.role === "PHYSICIAN") {
                   return (
