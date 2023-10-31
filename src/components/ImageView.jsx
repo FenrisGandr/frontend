@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Banner from './Banner';
-import WebFooter from './WebFooter';
-import { useAuth } from '../contexts/AuthContext';
+import Banner from "./Banner";
+import WebFooter from "./WebFooter";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function ImageView() {
   const { state } = useLocation();
   const image = state.image;
   const [showNote, setShowNote] = useState(false);
   const [showOpinions, setShowOpinions] = useState(false);
-  const [newNote, setNewNote] = useState('');
+  const [newNote, setNewNote] = useState("");
   const { role } = useAuth();
 
   function handleChange(event) {
@@ -19,79 +19,113 @@ export default function ImageView() {
   function handleSubmit(event) {
     event.preventDefault();
     // Add your code to handle form submission here
-    console.log('Note submitted:', newNote);
+    console.log("Note submitted:", newNote);
   }
 
   const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '35%'
-  }
+    display: "flex",
+    justifyContent: "center",
+    gap: "35%",
+  };
 
   const noteHeaderStyle = {
-    backgroundColor: 'blue',
-    borderTopLeftRadius: '10px',
-    borderTopRightRadius: '10px',
-  }
+    border: "1px solid blue",
+    backgroundColor: "lightblue",
+    borderTopLeftRadius: "10px",
+    borderTopRightRadius: "10px",
+  };
 
   const noteStyle = {
-    padding: '50px',
-    backgroundColor: 'grey',    
-  }
+    padding: "50px",
+    backgroundColor: "grey",
+  };
 
   const opinionsHeaderStyle = {
-    backgroundColor: 'red',
-  }
+    border: "1px solid red",
+    backgroundColor: "pink",
+  };
 
   const opinionStyle = {
-    padding: '50px',
-    backgroundColor: 'grey',
-  }
+    padding: "50px",
+    backgroundColor: "grey",
+  };
 
   return (
     <>
       <Banner text={"Medical Image Center"} />
       <div style={containerStyle}>
         <div>
-          <img src={image.img} alt="Medical Image" />
+          <img src={image.url} alt="Medical Image" />
         </div>
         <div>
           <div style={noteHeaderStyle}>
-            Physician Note:
-            <button onClick={() => { setShowNote(!showNote) }}>
-              {showNote ? '^' : 'v'}
+            Your physician notes:
+            <button
+              onClick={() => {
+                setShowNote(!showNote);
+              }}
+            >
+              {showNote ? "^" : "v"}
             </button>
           </div>
-          {showNote && <div style={noteStyle}>{image.note}</div>}
+          {showNote &&
+            (image.authors > 0 ? (
+              image.authors.map((author) => {
+                if (author.role === "PHYSICIAN") {
+                  return (
+                    <div key={author.uid} style={noteStyle}>
+                      {author.note}
+                    </div>
+                  );
+                }
+              })
+            ) : (
+              <div style={opinionStyle}>No opinions</div>
+            ))}
 
           <div style={opinionsHeaderStyle}>
             Second Opinions:
-            <button onClick={() => { setShowOpinions(!showOpinions) }}>
-              {showOpinions ? '^' : 'v'}
+            <button
+              onClick={() => {
+                setShowOpinions(!showOpinions);
+              }}
+            >
+              {showOpinions ? "^" : "v"}
             </button>
           </div>
-          {
-            showOpinions &&
-            (image.second_opinions && image.second_opinions.length > 0
-              ? image.second_opinions.map((opinion, index) => {
-                  return (
-                    <div key={index} style={opinionStyle}>
-                      Opinion {index + 1}: {opinion}
-                    </div>
-                  );
-                })
-              : <div style={opinionStyle}>No opinions</div>)
-          }
+          {showOpinions &&
+            (image.authors && image.authors.length > 0 ? (
+              image.authors.map((author, index) => {
+                return (
+                  <div key={author.uid} style={opinionStyle}>
+                    <p>
+                      Opinion {index + 1}: {author.note}
+                    </p>
+                    <span>By: {author.full_name}</span>
+                  </div>
+                );
+              })
+            ) : (
+              <div style={opinionStyle}>No opinions</div>
+            ))}
         </div>
       </div>
-      {role === 'Radiologist' && (
+      {role === "Radiologist" && (
         <form onSubmit={handleSubmit}>
-          <label htmlFor="note">Add notes:</label><br/>
-          <input type="text" id="note" name="note" value={newNote} onChange={handleChange}/><br/>
-          <input type="submit" value="Submit"/>
+          <label htmlFor="note">Add notes:</label>
+          <br />
+          <input
+            type="text"
+            id="note"
+            name="note"
+            value={newNote}
+            onChange={handleChange}
+          />
+          <br />
+          <input type="submit" value="Submit" />
         </form>
       )}
       <WebFooter />
     </>
-  )
+  );
 }
