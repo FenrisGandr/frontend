@@ -37,20 +37,22 @@ export default function ImageView() {
     backgroundColor: "#CFE2FF",
     borderTopLeftRadius: "10px",
     borderTopRightRadius: "10px",
-    width: "700px",
+    width: "625px",
     height: "65px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    cursor: "pointer"
   };
 
 
   const opinionsHeaderStyle = {
     border: "1px solid #FF0000",
     backgroundColor: "#F8D7DA",
-    width: "700px",
+    width: "625px",
     height: "65px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    cursor: "pointer"
   };
 
   const opinionStyle = {
@@ -110,7 +112,7 @@ export default function ImageView() {
           <img style={imageStyle} src={image.url} alt="Medical Image" />
         </div>
         <div style={opinionWrapperStlye}>
-          <div style={noteHeaderStyle}>
+          <div style={noteHeaderStyle} onClick={()=>setShowNote(!showNote)}>
             <span style={spanStyle}>Your physician notes:</span>
             <button style={buttonStyle}
               onClick={() => {
@@ -135,7 +137,7 @@ export default function ImageView() {
               <div style={opinionStyle}>No opinions</div>
             ))}
 
-          <div style={opinionsHeaderStyle}>
+          <div style={opinionsHeaderStyle} onClick={()=>setShowOpinions(!showOpinions)}>
             <span style={spanStyle}>Second Opinions:</span>
             <button 
               style={buttonStyle}
