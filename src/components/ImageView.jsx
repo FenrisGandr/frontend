@@ -138,7 +138,7 @@ export default function ImageView() {
             ))}
 
           <div style={opinionsHeaderStyle} onClick={()=>setShowOpinions(!showOpinions)}>
-            <span style={spanStyle}>Second Opinions:</span>
+            <span style={spanStyle}>Radiologist Notes:</span>
             <button 
               style={buttonStyle}
               onClick={() => {
