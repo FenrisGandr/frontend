@@ -13,6 +13,28 @@ export default function ImageView() {
   const [newNote, setNewNote] = useState("");
   const { role } = useAuth();
 
+  const roleColor = (role) => {
+    if (role == "Radiologist") {
+        return "#E35D6A";
+    }
+    return "#0D6EFD"; // Physician color
+}
+  // Image URL
+  const imageUrl = 'https://image.freepik.com/free-photo/spine-x-ray_1101-459.jpg';
+  
+  const textInputStyle = {
+    height: "250px",
+    width: "80%", 
+    padding: "10px", 
+    fontSize: "16px", 
+    marginTop: "5px", 
+    border: "2px solid #ccc", 
+    borderRadius: "5px", 
+    boxSizing: "border-box", 
+    display: "block", 
+    margin: "0 auto", 
+    textAlign: "left", 
+};
   function handleChange(event) {
     setNewNote(event.target.value);
   }
@@ -37,7 +59,7 @@ export default function ImageView() {
     backgroundColor: "#CFE2FF",
     borderTopLeftRadius: "10px",
     borderTopRightRadius: "10px",
-    width: "625px",
+    width: "900px",
     height: "65px",
     display: "flex",
     alignItems: "center",
@@ -48,7 +70,7 @@ export default function ImageView() {
   const opinionsHeaderStyle = {
     border: "1px solid #FF0000",
     backgroundColor: "#F8D7DA",
-    width: "625px",
+    width: "900px",
     height: "65px",
     display: "flex",
     alignItems: "center",
@@ -56,7 +78,7 @@ export default function ImageView() {
   };
 
   const opinionStyle = {
-    padding: "50px",
+    padding: "100px",
     border: "1px solid grey",
     // backgroundColor: "grey",
   };
@@ -102,14 +124,32 @@ export default function ImageView() {
     fontWeight: 'bold',
     fontSize: "17px"
   }
+    const buttonStyle1= {
+    width: "250px",
+    height: "40px",
+    backgroundColor: roleColor(role),
+    color: "white",
+    borderRadius: "5px",
+    fontSize: "18px",
+    marginTop: "4rem",
+    marginLeft: "15rem",
+    marginBottom: "4rem",
+  };
+  const yourNotesStyle = {
+    padding: "20px",
+    marginLeft: "10rem",
+    fontSize: "18px",
+    fontWeight: "bold",
+  };
+
   return (
     <>
       <Banner text={"Medical Image Center"} />
-      <h2 style={introStyle}>Your Medical Images</h2>
+      <h2 style={introStyle}>John Doe's Medical Images</h2>
 
       <div style={containerStyle}>
         <div>
-          <img style={imageStyle} src={image.url} alt="Medical Image" />
+          <img style={imageStyle} src={imageUrl} alt="Medical Image" />
         </div>
         <div style={opinionWrapperStlye}>
           <div style={noteHeaderStyle} onClick={()=>setShowNote(!showNote)}>
@@ -136,7 +176,10 @@ export default function ImageView() {
                 }
               })
             ) : (
-              <div style={opinionStyle}>No opinions</div>
+              <div style={opinionStyle}>
+                <p>"test"</p>
+                <p>"test"</p>
+              </div>
             ))}
 
           <div style={opinionsHeaderStyle} onClick={()=>setShowOpinions(!showOpinions)}>
@@ -164,23 +207,29 @@ export default function ImageView() {
                   );
               })
             ) : (
-              <div style={opinionStyle}>No opinions</div>
+              <div style={opinionStyle}>
+                <p>No opinions</p>
+                </div>
             ))}
         </div>
       </div>
       {role === "Radiologist" && (
         <form onSubmit={handleSubmit}>
-          <label htmlFor="note">Add notes:</label>
+          <div style={yourNotesStyle}>
+          <label htmlFor="note">Your Notes:</label>
+          </div>
           <br />
-          <input
-            type="text"
-            id="note"
+          <textarea
+          id="note"  
+          type="text"
             name="note"
             value={newNote}
             onChange={handleChange}
+            style = {textInputStyle} //apply style to input
+            rows={5}
           />
           <br />
-          <input type="submit" value="Submit" />
+          <button type="submit" style={buttonStyle1}>Submit Analysis</button>
         </form>
       )}
 
