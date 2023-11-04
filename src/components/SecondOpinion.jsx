@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../constants";
 import { useAuth } from "../contexts/AuthContext";
 import Banner from "./Banner";
 import WebFooter from "./WebFooter";
 import SecondOpinionCenter from "./second opinion components/SecondOpinionCenter";
+import LoadingSpinner from "./LoadingSpinner";
 
 function SecondOpinion() {
   const [radiologists, setRadiologists] = useState([]);
   const [invoicing, setInvoicing] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { user, role } = useAuth();
 
@@ -28,7 +30,6 @@ function SecondOpinion() {
   };
   const signupButtonStyle = {
     width: "165px",
-    height: "50px",
     marginTop: "2rem",
     fontSize: "20px",
     marginLeft: "3rem",
@@ -74,9 +75,13 @@ function SecondOpinion() {
           return response.json();
         })
         .then((data) => {
+          setLoading();
           setRadiologists(data.radiologists);
         })
-        .catch((err) => console.error("Error fetching data:", err));
+        .catch((err) => {
+          setLoading(false);
+          console.error("Error fetching data:", err);
+        });
     };
     getRadiologists();
   }, []);
@@ -104,6 +109,7 @@ function SecondOpinion() {
               <Form.Label htmlFor="radiologistSelect">
                 Select the radiologist that is best for you!
               </Form.Label>
+              {loading && <LoadingSpinner />}
               <Col xs={12} sm={6}>
                 <Form onSubmit={handleRadiologistSelect}>
                   <Form.Select id="radiologistSelect">
@@ -139,11 +145,13 @@ function SecondOpinion() {
             </Row>
           </Container>
         ) : (
-          <a href="signup">
-            <button className="btn btn-primary" style={signupButtonStyle}>
-              Sign up here
-            </button>
-          </a>
+          <Link
+            to="/signup"
+            className="btn btn-primary"
+            style={signupButtonStyle}
+          >
+            Sign up here
+          </Link>
         )}
       </div>
 

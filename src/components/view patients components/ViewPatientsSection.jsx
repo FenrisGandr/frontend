@@ -1,7 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, additionalText}) => {
     const navigate = useNavigate();
@@ -80,7 +80,7 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
          </div>
          <button style={buttonStyle} onClick={toggleAdditionalText}>{showAdditionalText ? 'View  ':'View '} </button>
             {role === "Physician" ?
-            <a href="upload"><button style={buttonStyle}>Add Image</button></a>
+            <Link to="/upload"><Button style={buttonStyle}>Add Image</Button></Link>
             : <></>
             }
         </div>

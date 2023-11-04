@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Banner from './Banner'
 import WebFooter from './WebFooter'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../constants";
 import { useAuth } from "../contexts/AuthContext";
-import { Container, Image } from "react-bootstrap";
+import { Button, Container, Image } from "react-bootstrap";
 
 
 export default function ImageLibrary() {
@@ -42,7 +42,7 @@ export default function ImageLibrary() {
     navigate("/imageview", { state: { image } });
   }
   //styles start here
-  const divStyle ={
+  const divStyle = {
     margin: "10px",
     border: "solid 1px grey",
     width: "1000px",
@@ -56,7 +56,7 @@ export default function ImageLibrary() {
     justifyContent: "center",
     flexDirection: "column"
   }
-  const imageStyle ={
+  const imageStyle = {
     minWidth: "200px",
     height: "auto",
     maxWidth: "200px",
@@ -79,10 +79,10 @@ export default function ImageLibrary() {
 
   }
   const introStyle = {
-      color: '#0D6EFD',
-      margin: '5rem'
+    color: '#0D6EFD',
+    margin: '5rem'
   }
-  const returnButton ={
+  const returnButton = {
     margin: "20rem",
     color: "white",
     border: "none",
@@ -100,21 +100,25 @@ export default function ImageLibrary() {
   //styles end here
   return (
     <>
-    <Banner text={"Medical Image Center"} />
-    <h2 style={introStyle}>Your Medical Images</h2>
-    <Container style={containerStyle}>
-      {images.map((image) => {
-        return (
-          <div key={image.uid} style={divStyle}>
+      <Banner text={"Medical Image Center"} />
+      <h2 style={introStyle}>Your Medical Images</h2>
+      <Container style={containerStyle}>
+        {images.map((image) => {
+          return (
+            <div key={image.uid} style={divStyle}>
 
-            <Image src={image.url} style={imageStyle}/>
-            <button style={buttonStyle} onClick={() => {handleClick(image)}}>View</button>
-          </div>
-        )
-      })}
-    </Container>
-    <a href="dashboard"><button style={returnButton}>Back to Dashboard</button></a>
-    <WebFooter/>
+              <Image src={image.url} style={imageStyle} />
+              <button style={buttonStyle} onClick={() => { handleClick(image) }}>View</button>
+            </div>
+          )
+        })}
+      </Container>
+      <Link to="/dashboard">
+        <Button style={returnButton}>
+          Back to Dashboard
+        </Button>
+      </Link>
+      <WebFooter />
     </>
   )
 }

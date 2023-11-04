@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Navbar, NavbarText } from "react-bootstrap";
+import { Button, Nav, Navbar, NavbarText } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -91,9 +91,9 @@ const NavBar = React.memo(() => {
         </div>
         <div className="signupContainer">
           <span className="buttonText">New User?</span>
-          <a href="/signup" className="btn btn-primary signup">
-            Sign up
-          </a>
+          <Link to="/signup">
+            <Button className="btn btn-primary signup">Sign up</Button>
+          </Link>
         </div>
       </div>
     );
@@ -142,7 +142,8 @@ const NavBar = React.memo(() => {
   return (
     <Navbar className="navbar shadow-sm">
       <Navbar.Brand
-        href="/"
+        as={Link}
+        to="/"
         style={{ fontSize: "2.25rem", marginLeft: "30px" }}
       >
         <img

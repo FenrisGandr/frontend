@@ -4,6 +4,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { API_URL } from "../constants.js";
 import { useAuth } from "../contexts/AuthContext";
 import Banner from "./Banner";
+import { Link } from "react-router-dom";
 
 function Invoices() {
   const [pageIsFocus, setPageIsFocus] = useState(false);
@@ -64,9 +65,9 @@ function Invoices() {
             invoices.map((invoice) => {
               return (
                 <ListGroup.Item
-                  as="a"
+                  as={Link}
                   className="py-5 text-center shadow-sm"
-                  href={invoice.url}
+                  to={invoice.url}
                   rel="noopener noreferrer"
                   target="_blank"
                   key={invoice.uid}
