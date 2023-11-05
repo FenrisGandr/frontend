@@ -14,6 +14,7 @@ import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
 import { API_URL } from "../constants";
 import { useAuth } from "../contexts/AuthContext";
 
+
 function Signup() {
   const {
     register,
@@ -70,6 +71,10 @@ function Signup() {
         if (data.errors) {
           setError("root.serverError", { message: data.errors[0].msg });
         } else {
+          if( role === "PATIENT") // Patient Message here
+          {
+            alert('Share your account email with your physician to get started.');
+          }
           navigate("/signin");
         }
       })
