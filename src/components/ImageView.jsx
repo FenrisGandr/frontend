@@ -61,7 +61,7 @@ export default function ImageView() {
       .then((res) => res.json())
       .then((data) => {
         // If api returns errors, display them
-        if (data.errors.length > 0) {
+        if (data.errors && data.errors.length > 0) {
           alert(data.errors[0].msg);
           setSubmitting(false);
         }
