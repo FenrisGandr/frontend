@@ -18,12 +18,24 @@ function WebFooter(){
       const contentStyle = {
         marginLeft:'175px',
         marginRight:'175px',
-        paddingBottom:'100px',
+        paddingBottom:'20px',
+        
       };
-    
-
-
-
+      const linkStyle = {
+        textDecoration: 'underline',
+        cursor: 'pointer',
+        color: '#fff',
+        margin: '15px',
+    };
+    const dividerStyle = {
+      color: '#fff',
+      margin: '0 10px',
+    };  
+    const copyrightStyle = {
+      textAlign: 'center',
+      marginTop: '20px',
+    };
+  
     return (
     <footer style={footerStyle}>
         <div style={headerStyle}>
@@ -35,7 +47,15 @@ function WebFooter(){
                 you with the tools and expertise to take charge of your healthcare decisions easy.
             
         </div>
+        <div style={{ textAlign: 'center', paddingTop: '20px' }}>
+                <span style={linkStyle}>Work for Us</span>
+                <span style={dividerStyle}>|</span>
+                <span style={linkStyle}>Contact Us</span>
+            </div>
+            <div style={copyrightStyle}>
+            &copy; {new Date().getFullYear()} Radiology Archive. All rights reserved.
+            </div>
     </footer>
-        )
+        );
 }
 export default WebFooter;
