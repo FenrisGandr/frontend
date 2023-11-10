@@ -55,6 +55,7 @@ function AddPatient() {
         last_name,
       }),
     })
+      .then((res) => res.json())
       .then((data) => {
         if (data.errors) {
           setError("root.serverError", { message: data.errors[0].msg });
@@ -233,6 +234,10 @@ function AddPatient() {
                   )}
                 </Form.Group>
               </Col>
+            </Row>
+
+            <Row className="text-danger text-center">
+              {errors.root ? <p>{errors.root.serverError.message}</p> : null}
             </Row>
 
             <Row>
