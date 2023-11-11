@@ -5,6 +5,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
 import person from "../assets/person.png";
+import bell from "../assets/bell.png";
 import { useAuth } from "../contexts/AuthContext";
 import "./NavBar.css";
 
@@ -43,6 +44,20 @@ const NavBar = React.memo(() => {
   const boldName = {
     fontWeight: "500",
   };
+  const bellNotification ={
+    height: "40px",
+    width:"auto"
+  }
+  const bellDiv={
+    backgroundColor: "#FFDA6A",
+    border: "#FFDA6A",
+    justifyContent: "center",
+    alignItems:"center",
+    borderRadius: "5px",
+    width:"60px",
+    height:"60px",
+    display: "flex"
+  }
 
   React.useEffect(() => {
     if (SHOW_TITLE_PATHS.includes(location.pathname)) {
@@ -114,6 +129,7 @@ const NavBar = React.memo(() => {
             </h2>
           </Nav>
         )}
+        <div style={bellDiv}><a href="/notifications" ><img src={bell} style={bellNotification}/></a></div>
         <Dropdown align="end" style={{ marginRight: "50px" }}>
           <Dropdown.Toggle style={backgroundStyle} id="loginDropdown">
             <img src={person} style={DropdownLogo} />
