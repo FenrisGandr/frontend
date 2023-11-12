@@ -48,8 +48,38 @@ export const NotificationProvider = ({ children }) => {
     }
   }, []);
 
+  const fetchReadNotifications = async (read) => {
+    try {
+      const token = await firebaseAuth.currentUser.getIdToken();
+      const response = await fetch(`${API_URL}/api/notification/read`, {
+        method: "PUT",
+        body: JSON.stringify({ read }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }).then((res) => res.json());
+      if (response.success) {
+        const updatedNotifications = notifications.map((notification) => {
+          const isRead = response.read.includes(notification.uid);
+
+          return {
+            ...notification,
+            read: isRead ? 1 : notification.read,
+          };
+        });
+
+        setNotifications(updatedNotifications);
+      }
+    } catch (error) {
+      console.error("Error marking notifications as read:", error);
+    }
+  };
+
   return (
-    <NotificationContext.Provider value={notifications}>
+    <NotificationContext.Provider
+      value={{ fetchReadNotifications, notifications }}
+    >
       {children}
     </NotificationContext.Provider>
   );
