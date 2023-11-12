@@ -17,6 +17,10 @@ const NavBar = React.memo(() => {
 
   const { role, user, signout } = useAuth();
   const { notifications } = useNotifications();
+  const unreadNotifications = notifications.filter(
+    (notification) => notification.read === 0
+  );
+
   const [showTitle, setShowTitle] = React.useState(false);
   const navigate = useNavigate();
 
@@ -46,21 +50,21 @@ const NavBar = React.memo(() => {
   const boldName = {
     fontWeight: "500",
   };
-  const bellNotification ={
+  const bellNotification = {
     height: "40px",
-    width:"auto"
-  }
-  const bellDiv={
+    width: "auto",
+  };
+  const bellDiv = {
     position: "relative",
     backgroundColor: "#FFDA6A",
     border: "#FFDA6A",
     justifyContent: "center",
-    alignItems:"center",
+    alignItems: "center",
     borderRadius: "5px",
-    width:"60px",
-    height:"60px",
-    display: "flex"
-  }
+    width: "60px",
+    height: "60px",
+    display: "flex",
+  };
 
   React.useEffect(() => {
     if (SHOW_TITLE_PATHS.includes(location.pathname)) {
@@ -133,12 +137,14 @@ const NavBar = React.memo(() => {
           </Nav>
         )}
         <div style={bellDiv}>
-          <a href="/notifications" >
-            <img src={bell} style={bellNotification}/>
-            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {notifications.length}
-              <span className="visually-hidden">unread notifications</span>
-            </span>
+          <a href="/notifications">
+            <img src={bell} style={bellNotification} />
+            {unreadNotifications > 0 && (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {unreadNotifications.length}
+                <span className="visually-hidden">unread notifications</span>
+              </span>
+            )}
           </a>
         </div>
         <Dropdown align="end" style={{ marginRight: "50px" }}>
