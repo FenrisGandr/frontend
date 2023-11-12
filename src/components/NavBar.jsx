@@ -7,6 +7,7 @@ import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
 import person from "../assets/person.png";
 import bell from "../assets/bell.png";
 import { useAuth } from "../contexts/AuthContext";
+import { useNotifications } from "../contexts/NotificationContext";
 import "./NavBar.css";
 
 const SHOW_TITLE_PATHS = ["/dashboard", "/profile"];
@@ -15,6 +16,7 @@ const NavBar = React.memo(() => {
   const location = useLocation();
 
   const { role, user, signout } = useAuth();
+  const { notifications } = useNotifications();
   const [showTitle, setShowTitle] = React.useState(false);
   const navigate = useNavigate();
 
@@ -49,6 +51,7 @@ const NavBar = React.memo(() => {
     width:"auto"
   }
   const bellDiv={
+    position: "relative",
     backgroundColor: "#FFDA6A",
     border: "#FFDA6A",
     justifyContent: "center",
@@ -129,7 +132,15 @@ const NavBar = React.memo(() => {
             </h2>
           </Nav>
         )}
-        <div style={bellDiv}><a href="/notifications" ><img src={bell} style={bellNotification}/></a></div>
+        <div style={bellDiv}>
+          <a href="/notifications" >
+            <img src={bell} style={bellNotification}/>
+            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {notifications.length}
+              <span className="visually-hidden">unread notifications</span>
+            </span>
+          </a>
+        </div>
         <Dropdown align="end" style={{ marginRight: "50px" }}>
           <Dropdown.Toggle style={backgroundStyle} id="loginDropdown">
             <img src={person} style={DropdownLogo} />
