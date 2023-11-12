@@ -139,7 +139,7 @@ const NavBar = React.memo(() => {
         <div style={bellDiv}>
           <a href="/notifications">
             <img src={bell} style={bellNotification} />
-            {unreadNotifications > 0 && (
+            {unreadNotifications.length > 0 && (
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {unreadNotifications.length}
                 <span className="visually-hidden">unread notifications</span>
