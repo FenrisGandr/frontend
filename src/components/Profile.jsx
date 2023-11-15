@@ -1,7 +1,8 @@
 import React from "react";
-import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { API_URL } from "../constants";
 import { useAuth } from "../contexts/AuthContext";
 import EditProfile from "./EditProfile";
@@ -38,14 +39,7 @@ function Profile() {
     getProfile();
   }, []);
 
-  if (!data)
-    return (
-      <Row className="justify-content-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Row>
-    );
+  if (!data) return <LoadingSpinner />;
 
   return (
     <>

@@ -1,18 +1,27 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+
 const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, additionalText}) => {
+    const navigate = useNavigate();
+
     const [showAdditionalText, setShowAdditionalText] = useState(false);
-    
+
     const toggleAdditionalText = () => {
         setShowAdditionalText(!showAdditionalText);
     };
     const { role } = useAuth();
+
     const roleColor = (role) => {
         if (role == "Radiologist") {
             return "#E35D6A";
         }
         return "#0D6EFD"; // Physician color
+    }
+
+    function handleClick(image) {
+        navigate("/imageview", { state: { image }})
     }
 
     const wrapperStyle ={
@@ -44,14 +53,14 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
         cursor: 'pointer',
         display: 'center',
         borderRadius: '5px',
-        marginRight: '2rem', 
+        marginRight: '2rem',
         backgroundColor: roleColor(role),
     }
     const additionalTextStyle = {
         fontSize: '16px',
         marginTop: '10px',
         marginLeft: '10px',
-    }    
+    }
     const additionalTextDiv={
         display: 'flex',
         flexDirection: 'column',
@@ -60,7 +69,7 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
 
     return (
     <div style={wrapperStyle}>
-    <div style={initialContainer}> 
+    <div style={initialContainer}>
          <div>
              <img src={profileImage} alt="Your Image" style={docImageStyle} />
          </div>
@@ -71,7 +80,7 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
          </div>
          <button style={buttonStyle} onClick={toggleAdditionalText}>{showAdditionalText ? 'View  ':'View '} </button>
             {role === "Physician" ?
-            <a href="upload"><button style={buttonStyle}>Add Image</button></a>
+            <Link to="/upload"><Button style={buttonStyle}>Add Image</Button></Link>
             : <></>
             }
         </div>
@@ -80,22 +89,34 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
         <div>
         <p style={additionalTextStyle}>Medical Images: </p>
         </div>
-         {additionalText.map((item, index)=> {
-            if (item.includes(".png") || item.includes(".jpg") || item.includes(".jpeg") || item.includes(".gif")) {
-            return (
-            <img key={index} src={item} alt={`Image ${index}`} style={{ width: "200px", height: "auto", marginBottom: "10px" }} />
-            );
-            } 
-            else {    
-        return( <p key = {index}>{item}</p>)
-            }
-       })}
+        {additionalText ? (
+            additionalText.map((image) => {
+                return (
+                    <img
+                    onClick={() => {
+                        handleClick(image);
+                    }}
+                    key={image.uid}
+                    src={image.url}
+                    alt={""}
+                    style={{
+                        width: "200px",
+                        height: "auto",
+                        marginBottom: "10px",
+                        cursor: "pointer",
+                    }}
+                    />
+                );
+                })
+        ) : (
+            <p>No Medical Images</p>
+        )}
 
        </div>
      )}
    </div>
 
-  );        
+  );
  };
 
 export default ViewPatientsSection;

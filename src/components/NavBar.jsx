@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Navbar, NavbarText } from "react-bootstrap";
+import { Button, Nav, Navbar, NavbarText } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -10,12 +10,8 @@ import "./NavBar.css";
 
 const SHOW_TITLE_PATHS = ["/dashboard", "/profile"];
 
-const NavBar = () => {
+const NavBar = React.memo(() => {
   const location = useLocation();
-
-  if (location.pathname === "/signin" || location.pathname === "/signup") {
-    return null;
-  }
 
   const { role, user, signout } = useAuth();
   const [showTitle, setShowTitle] = React.useState(false);
@@ -54,6 +50,10 @@ const NavBar = () => {
     }
   }, [location.pathname]);
 
+  if (location.pathname === "/signin" || location.pathname === "/signup") {
+    return <></>;
+  }
+
   const LoggedOutDropdown = () => {
     return (
       <div className="container">
@@ -91,15 +91,15 @@ const NavBar = () => {
         </div>
         <div className="signupContainer">
           <span className="buttonText">New User?</span>
-          <a href="/signup" className="btn btn-primary signup">
-            Sign up
-          </a>
+          <Link to="/signup">
+            <Button className="btn btn-primary signup">Sign up</Button>
+          </Link>
         </div>
       </div>
     );
   };
 
-  const LoggedInDropdown = () => {
+  const LoggedInDropdown = React.memo(({ role, user, signout }) => {
     return (
       <>
         {showTitle && !role && (
@@ -119,7 +119,7 @@ const NavBar = () => {
             <img src={person} style={DropdownLogo} />
           </Dropdown.Toggle>
 
-          <Dropdown.Menu>
+          <Dropdown.Menu style={{ width: "max-content" }}>
             <Dropdown.ItemText style={boldName}>
               {user.displayName || user.email}
             </Dropdown.ItemText>
@@ -137,12 +137,13 @@ const NavBar = () => {
         </Dropdown>
       </>
     );
-  };
+  });
 
   return (
     <Navbar className="navbar shadow-sm">
       <Navbar.Brand
-        href="/"
+        as={Link}
+        to="/"
         style={{ fontSize: "2.25rem", marginLeft: "30px" }}
       >
         <img
@@ -154,8 +155,12 @@ const NavBar = () => {
         <NavbarText id="radiology">Radiology</NavbarText>
         <NavbarText id="archive">Archive</NavbarText>
       </Navbar.Brand>
-      {user ? <LoggedInDropdown /> : <LoggedOutDropdown />}
+      {user ? (
+        <LoggedInDropdown role={role} user={user} signout={signout} />
+      ) : (
+        <LoggedOutDropdown />
+      )}
     </Navbar>
   );
-};
+});
 export default NavBar;

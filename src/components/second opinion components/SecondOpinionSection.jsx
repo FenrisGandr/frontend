@@ -1,6 +1,10 @@
 import { useState } from "react";
-
-const SecondOpinionSection = ({ picture, doctorAndTitle, specialization, additionalText }) => {
+const SecondOpinionSection = ({
+  picture,
+  doctorAndTitle,
+  specialization,
+  bio,
+}) => {
   const [showAdditionalText, setShowAdditionalText] = useState(false);
 
   const toggleAdditionalText = () => {
@@ -9,51 +13,44 @@ const SecondOpinionSection = ({ picture, doctorAndTitle, specialization, additio
 
   const wrapperStyle = {
     border: "1px solid gray",
-    overflow: 'hidden',
+    // margin: '4rem',
+    overflow: "hidden",
   };
-
   const initialContainer = {
-    display: 'flex',
-    borderBottom: showAdditionalText ? '1px solid gray' : '',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    borderBottom: showAdditionalText ? "1px solid gray" : "",
+    justifyContent: "center",
+    alignItems: "center",
   };
-
   const docImageStyle = {
-    margin: '10px',
+    margin: "10px",
   };
-
   const doctorTitleStyle = {
-    fontWeight: 'bold',
-    marginTop: '10px',
+    fontWeight: "bold",
+    marginTop: "10px",
   };
-
   const buttonStyle = {
-    marginLeft: 'auto',
-    color: 'grey',
-    border: 'none',
-    padding: '10px',
-    fontSize: '16px',
-    width: '30px',
-    height: 'auto',
-    cursor: 'pointer',
-    display: 'center',
-    borderRadius: '5px',
-    marginRight: '2rem',
+    marginLeft: "auto",
+    color: "grey",
+    border: "none",
+    padding: "10px",
+    fontSize: "16px",
+    width: "30px",
+    height: "auto",
+    cursor: "pointer",
+    display: "center",
+    borderRadius: "5px",
+    marginRight: "2rem",
   };
-
   const additionalTextStyle = {
-    fontSize: '15px',
+    fontSize: "15px",
+    whiteSpace: "break-spaces",
   };
-
   const additionalTextDiv = {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '10px',
+    display: "flex",
+    flexDirection: "column",
+    margin: "10px",
   };
-
-  // Split additionalText into an array of paragraphs
-  const additionalTextArray = additionalText.split('\n');
 
   return (
     <div style={wrapperStyle}>
@@ -66,16 +63,14 @@ const SecondOpinionSection = ({ picture, doctorAndTitle, specialization, additio
           <p>Specialization: {specialization}</p>
         </div>
         <button style={buttonStyle} onClick={toggleAdditionalText}>
-          {showAdditionalText ? '^' : 'v'}
+          {showAdditionalText ? "^" : "v"}
         </button>
       </div>
       {showAdditionalText && (
         <div style={additionalTextDiv}>
-          {additionalTextArray.map((paragraph, index) => (
-            <p key={index} style={additionalTextStyle}>
-              {paragraph}
-            </p>
-          ))}
+          <p style={additionalTextStyle}>
+            {bio || "[no bio available]"}
+          </p>
         </div>
       )}
     </div>

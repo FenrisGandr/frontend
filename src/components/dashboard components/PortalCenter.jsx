@@ -51,7 +51,14 @@ export default function PortalCenter({ role }) {
         description:
           "Your physician will send you a digital copy of your medical scan through our web service! They will also leave notes attached to the image for your convenience to better understand your health. ",
         btnText: "View Medical Images",
-        btnLink: "/images",
+        btnLink: "/imagelibrary",
+      },
+      {
+        title: "View Your Invoices.",
+        description:
+          "",
+        btnText: "Invoice History",
+        btnLink: "/invoices",
       },
       {
         title: "Want a Second Opinion?",

@@ -37,7 +37,7 @@ function Signup() {
     },
   });
   const navigate = useNavigate();
-  const { signup } = useAuth();
+  const { signin, signup } = useAuth();
 
   const [hospitals, setHospitals] = React.useState([]);
   const watchRole = watch("role");
@@ -71,11 +71,32 @@ function Signup() {
         if (data.errors) {
           setError("root.serverError", { message: data.errors[0].msg });
         } else {
-          if( role === "PATIENT") // Patient Message here
-          {
-            alert('Share your account email with your physician to get started.');
-          }
-          navigate("/signin");
+          signin(email, password)
+            .then((data) => {
+              if (data.errors) {
+                setError("root.serverError", {
+                  message: "The email or password is incorrect",
+                });
+              } else {
+                if (role === "PATIENT") // Patient sign up message fix
+                {
+                  alert("Share your account email with your physician to get started.");
+                }
+                navigate("/dashboard");
+              }
+            })
+            .catch((err) => {
+              if (err.code === "auth/invalid-login-credentials") {
+                setError("root.serverError", {
+                  message: "The email or password is incorrect",
+                });
+              } else {
+                setError("root.serverError", {
+                  message: "Something went wrong",
+                });
+              }
+              console.error(err);
+            });
         }
       })
       .catch((err) => console.log(err));
@@ -130,7 +151,6 @@ function Signup() {
                     </option>
                     <option value="PATIENT">Patient</option>
                     <option value="PHYSICIAN">Physician</option>
-                    <option value="RADIOLOGIST">Radiologist</option>
                   </Form.Select>
                 </Form.Group>
               </Col>
