@@ -5,7 +5,9 @@ import Spinner from "react-bootstrap/Spinner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
 import person from "../assets/person.png";
+import bell from "../assets/bell.png";
 import { useAuth } from "../contexts/AuthContext";
+import { useNotifications } from "../contexts/NotificationContext";
 import "./NavBar.css";
 
 const SHOW_TITLE_PATHS = ["/dashboard", "/profile"];
@@ -14,6 +16,11 @@ const NavBar = React.memo(() => {
   const location = useLocation();
 
   const { role, user, signout } = useAuth();
+  const { notifications } = useNotifications();
+  const unreadNotifications = notifications.filter(
+    (notification) => notification.read === 0
+  );
+
   const [showTitle, setShowTitle] = React.useState(false);
   const navigate = useNavigate();
 
@@ -42,6 +49,21 @@ const NavBar = React.memo(() => {
   };
   const boldName = {
     fontWeight: "500",
+  };
+  const bellNotification = {
+    height: "40px",
+    width: "auto",
+  };
+  const bellDiv = {
+    position: "relative",
+    backgroundColor: "#FFDA6A",
+    border: "#FFDA6A",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "5px",
+    width: "60px",
+    height: "60px",
+    display: "flex",
   };
 
   React.useEffect(() => {
@@ -114,6 +136,17 @@ const NavBar = React.memo(() => {
             </h2>
           </Nav>
         )}
+        <div style={bellDiv}>
+          <a href="/notifications">
+            <img src={bell} style={bellNotification} />
+            {unreadNotifications.length > 0 && (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {unreadNotifications.length}
+                <span className="visually-hidden">unread notifications</span>
+              </span>
+            )}
+          </a>
+        </div>
         <Dropdown align="end" style={{ marginRight: "50px" }}>
           <Dropdown.Toggle style={backgroundStyle} id="loginDropdown">
             <img src={person} style={DropdownLogo} />
@@ -129,7 +162,7 @@ const NavBar = React.memo(() => {
             <Dropdown.Item as={Link} to="/profile">
               Profile
             </Dropdown.Item>
-            <Dropdown.Item as={Link} to="TODO" disabled={true}>
+            <Dropdown.Item as={Link} to="/notifications">
               Notifications
             </Dropdown.Item>
             <Dropdown.Item onClick={signout}>Log Out</Dropdown.Item>

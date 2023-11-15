@@ -85,7 +85,7 @@ function Invoices() {
                         invoice.paid ? "text-success" : "text-danger"
                       }`}
                     >
-                      {invoice.paid ? "paid" : "unpaid"}
+                      {invoice.paid ? "paid" : <div><p>unpaid</p><p>click to pay</p></div>}
                     </Col>
                   </Row>
                 </ListGroup.Item>
