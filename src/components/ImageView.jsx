@@ -60,6 +60,12 @@ export default function ImageView() {
     })
       .then((res) => res.json())
       .then((data) => {
+        // If api returns errors, display them
+        if (data.errors && data.errors.length > 0) {
+          alert(data.errors[0].msg);
+          setSubmitting(false);
+        }
+        // If api returns success, update image state
         if (data.success) {
           const newAuthors = image.authors.map((author) => {
             if (author.uid === user.uid) {
@@ -67,19 +73,38 @@ export default function ImageView() {
             }
             return author;
           });
+
+          // Check if a matching author was found
+          const matchingAuthor = newAuthors.find((author) => author.uid === user.uid);
+
+          // If no matching author was found, add the new object to the array
+          if (!matchingAuthor) {
+            newAuthors.push({
+              uid: user.uid,
+              note: newNote,
+              role: role.toUpperCase(),
+              full_name: user.displayName,
+            });
+          }
+
           setImage((prev) => ({
             uid: prev.uid,
             url: prev.url,
             authors: newAuthors,
           }));
+
           // timeout to simulate a delay in submitting
           setTimeout(() => {
             setSubmitting(false);
             alert("Note updated successfully!");
           }, 250);
+
           // this is required to update the state of the image in the dashboard
           // without this, the image will not show the updated note when refreshing
           navigate(pathname, { state: { image } });
+        } else if (data.msg) {
+          alert(data.msg);
+          setSubmitting(false);
         } else {
           alert("Error updating note");
           setSubmitting(false);
