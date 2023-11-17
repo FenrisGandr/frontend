@@ -233,7 +233,7 @@ export default function ImageView() {
   return (
     <>
       <Banner text={"Medical Image Center"} />
-      <h2 style={introStyle}>John Doe's Medical Images</h2>
+      <h2 style={introStyle}>{state.image.name}'s Medical Images</h2>
 
       <div style={containerStyle}>
         <div>
@@ -360,7 +360,7 @@ export default function ImageView() {
           <h2 style={{marginLeft:" 5rem", color:"#0D6EFD" }}>Rate your Radiologist!</h2>
           <p style={{marginLeft:" 5rem",fontSize: '20px',}}>Leaving a rating helps patients like you have an easier time choosing the radiologist that is right for them! Please give your opinion on your chosen radiologist. </p>
           <button onClick={handleShow} style={{marginLeft:" 5rem", marginBottom:" 15rem",width: '250px',height: '50px',backgroundColor: roleColor(role),color: 'white',borderRadius: '5px',fontSize:'20px'}}>Leave a Review</button>
-        
+
         {/*below is the code for the popup that allows the user to submit a rating */}
         <Modal
           show={show}
@@ -399,7 +399,7 @@ export default function ImageView() {
             </div>
             <button style={{backgroundColor:"#0D6EFD", color:"white", borderRadius:"5px", width:"300px", height: "auto", margin: "50px" }} onClick={handleClose}>Submit</button>
           </Modal.Body>
-        </Modal>  
+        </Modal>
         </div>
       )}
       <WebFooter />
