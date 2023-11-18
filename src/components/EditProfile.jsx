@@ -35,8 +35,20 @@ function EditProfile(props) {
   const [uploading, setUploading] = React.useState(false);
   const bioFormRef = React.useRef(null);
 
+  const [showEmailUpdate, setShowEmailUpdate] = React.useState(false);
+  const [newEmail, setNewEmail] = React.useState('');
+  const [emailError, setEmailError] = React.useState('');
+
+  const [password, setPassword] = React.useState('');
+
   const allowBioEdit = role === "Physician" || role === "Radiologist";
 
+  const handleEmailUpdate = () => {
+    // Validate and send the new email to the API
+    // Reset the state and close the form after update
+  };
+
+  
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setProfileImage(e.target.files[0]);
@@ -235,6 +247,43 @@ function EditProfile(props) {
                 <Spinner size="sm" className="mx-2" animation="border" />
               )}
             </Button>
+          </Col>
+        </Row>
+      )}
+       {isEditing && (role === "Patient" || role === "Physician") && (
+        <Row>
+          <Col xs={12}>
+            <Button onClick={() => setShowEmailUpdate(true)}>Update Email</Button>
+          </Col>
+        </Row>
+      )}
+
+      {showEmailUpdate && (
+        <Row>
+          <Col xs={12}>
+            <Form>
+              <Form.Group>
+                <Form.Label>New Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password to confirm"
+                />
+
+                {emailError && <div className="text-danger">{emailError}</div>}
+              </Form.Group>
+              <Button onClick={handleEmailUpdate}>Save Email</Button>
+              <Button variant="secondary" onClick={() => setShowEmailUpdate(false)}>Cancel</Button>
+            </Form>
           </Col>
         </Row>
       )}
