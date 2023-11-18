@@ -16,9 +16,6 @@ function Dashboard() {
   const PortalCenterDiv = {
     display: "flex",
     flexDirection: "column",
-    paddingTop: "2rem",
-    paddingBottom: "14rem",
-    background: "#f2f9ff"
   };
 
   return (

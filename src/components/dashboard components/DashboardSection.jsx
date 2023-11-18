@@ -17,13 +17,10 @@ function DashboardSection({role, isLast, headerDescription, paragraphDescription
   };
     const headerStyle = {
         color: '#0D6EFD',
-        marginBottom: '1.5rem',
 
     }
     const descriptionStyle ={
         fontSize: '20px',
-        marginTop: '1rem',
-        marginBottom: '1rem',
     }
 
     const buttonStyle = {
@@ -32,19 +29,19 @@ function DashboardSection({role, isLast, headerDescription, paragraphDescription
         backgroundColor: roleColor(role),
         color: 'white',
         borderRadius: '5px',
-        fontSize:'20px',
-        margin: '1.25rem'
+        fontSize:'20px'
     }
     const divStyle = {
         marginLeft: '80px',
         marginTop:'50px',
-        marginBottom: '1rem'
+        marginBottom: '75px'
     }
     const divider = {
         height: '3px',
         width: '50%',
         backgroundColor: '#0D6EFD',
-        marginTop: '3.5rem',
+        marginTop: '150px',
+        marginBottom: '50px',
     }
 
     return(

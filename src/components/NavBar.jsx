@@ -38,14 +38,13 @@ const NavBar = React.memo(() => {
   const backgroundStyle = {
     backgroundColor: roleColor(role),
     border: roleColor(role),
-    height: "100%",
   };
   const titleStyle = {
     fontSize: "2rem",
     color: roleColor(role),
   };
   const DropdownLogo = {
-    width: "2.5rem",
+    width: "2rem",
     innerHeight: "2rem",
   };
   const boldName = {
@@ -63,10 +62,8 @@ const NavBar = React.memo(() => {
     alignItems: "center",
     borderRadius: "5px",
     width: "60px",
-    height: "100%",
+    height: "60px",
     display: "flex",
-    marginLeft: "2rem",
-    marginRight: "3.5rem",
   };
 
   React.useEffect(() => {
@@ -133,46 +130,44 @@ const NavBar = React.memo(() => {
           </Spinner>
         )}
         {showTitle && role && (
-          <Nav className="mr-auto text-nowrap">
-            <h2 style={{ fontSize: "2rem" }}>
+          <Nav className="mr-auto">
+            <h2>
               <span style={titleStyle}>{role}</span> Portal
             </h2>
           </Nav>
         )}
-        <div style={{ display: "flex", alignItems: "center", height: "50px" }}>
-          <div style={bellDiv}>
-            <a href="/notifications">
-              <img src={bell} style={bellNotification} />
-              {unreadNotifications.length > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {unreadNotifications.length}
-                  <span className="visually-hidden">unread notifications</span>
-                </span>
-              )}
-            </a>
-          </div>
-          <Dropdown align="end" style={{ marginRight: "50px", height: "100%" }}>
-            <Dropdown.Toggle style={backgroundStyle} id="loginDropdown">
-              <img src={person} style={DropdownLogo} />
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu style={{ width: "max-content" }}>
-              <Dropdown.ItemText style={boldName}>
-                {user.displayName || user.email}
-              </Dropdown.ItemText>
-              <Dropdown.Item as={Link} to="/dashboard">
-                Dashboard
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="/profile">
-                Profile
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="/notifications">
-                Notifications
-              </Dropdown.Item>
-              <Dropdown.Item onClick={signout}>Log Out</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+        <div style={bellDiv}>
+          <a href="/notifications">
+            <img src={bell} style={bellNotification} />
+            {unreadNotifications.length > 0 && (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {unreadNotifications.length}
+                <span className="visually-hidden">unread notifications</span>
+              </span>
+            )}
+          </a>
         </div>
+        <Dropdown align="end" style={{ marginRight: "50px" }}>
+          <Dropdown.Toggle style={backgroundStyle} id="loginDropdown">
+            <img src={person} style={DropdownLogo} />
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu style={{ width: "max-content" }}>
+            <Dropdown.ItemText style={boldName}>
+              {user.displayName || user.email}
+            </Dropdown.ItemText>
+            <Dropdown.Item as={Link} to="/dashboard">
+              Dashboard
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/profile">
+              Profile
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/notifications">
+              Notifications
+            </Dropdown.Item>
+            <Dropdown.Item onClick={signout}>Log Out</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </>
     );
   });
