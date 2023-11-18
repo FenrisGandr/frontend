@@ -94,7 +94,7 @@ const ViewPatientsSection = ({profileImage, patientName, dob, patientEmail, addi
                 return (
                     <img
                     onClick={() => {
-                        handleClick(image);
+                        handleClick({...image, name: patientName });
                     }}
                     key={image.uid}
                     src={image.url}
