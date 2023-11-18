@@ -46,8 +46,46 @@ function EditProfile(props) {
   const handleEmailUpdate = () => {
     // Validate and send the new email to the API
     // Reset the state and close the form after update
+    if (!newEmail || !password) {
+      setEmailError("Email and password are required.");
+      return;
+    }
+    setEmailError('');
+  
+    // API request to update email using PUT method
+    fetch(API_URL + "/api/user/email", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + user.accessToken,
+      },
+      body: JSON.stringify({
+        email: newEmail,
+        password: password
+      }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to update email. Please try again.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Handle successful response
+      if (data.success) {
+        alert("Email updated successfully!");
+        setShowEmailUpdate(false);
+        setNewEmail(''); // Optionally reset the email state
+        setPassword(''); // Optionally reset the password state
+      } else {
+        setEmailError(data.message || "Failed to update email.");
+      }
+    })
+    .catch(error => {
+      // Handle network errors or other unexpected errors
+      setEmailError(error.message);
+    });
   };
-
   
   const handleChange = (e) => {
     if (e.target.files[0]) {
