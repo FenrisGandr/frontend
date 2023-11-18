@@ -261,16 +261,19 @@ function EditProfile(props) {
       {showEmailUpdate && (
         <Row>
           <Col xs={12}>
+          <h2 className="my-4" style={{ color: "#0d6efd" }}>Change Email</h2>
+          <p className ="mb-4">To update your email, please provide your new email and current password.</p>
             <Form>
-              <Form.Group>
+              <Form.Group className = "mb-3">
                 <Form.Label>New Email</Form.Label>
                 <Form.Control
                   type="email"
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
+                  placeholder="Enter your new email"
                 />
               </Form.Group>
-              <Form.Group>
+              <Form.Group className = "mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -281,8 +284,8 @@ function EditProfile(props) {
 
                 {emailError && <div className="text-danger">{emailError}</div>}
               </Form.Group>
-              <Button onClick={handleEmailUpdate}>Save Email</Button>
-              <Button variant="secondary" onClick={() => setShowEmailUpdate(false)}>Cancel</Button>
+              <Button onClick={handleEmailUpdate}>Confirm</Button>
+              <Button className="ms-4" variant="secondary" onClick={() => setShowEmailUpdate(false)}>Cancel</Button>
             </Form>
           </Col>
         </Row>
