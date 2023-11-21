@@ -10,8 +10,9 @@ function SecondOpinionCenter({ radiologists }) {
             key={item.uid}
             picture={item.profile_image_url}
             doctorAndTitle={
-              item.title + " " + item.first_name + " " + item.last_name
+              item.title + " " + item.first_name + " " + item.last_name + " " 
             }
+            average_rating={item.average_rating}
             specialization={item.expertise}
             bio={item.bio}
           />
