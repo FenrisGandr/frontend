@@ -5,30 +5,25 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import React from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-  Spinner,
-} from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import default_profile_picture from "../assets/default_profile_picture.png";
 import { API_URL, MODE } from "../constants.js";
 import { useAuth } from "../contexts/AuthContext";
+import Banner from "./Banner";
+import ProfileStaff from "./ProfileStaff";
+import WebFooter from "./WebFooter";
 
 function EditProfile(props) {
   const { profile_image_url, bio } = props.profile;
+  const { isEditing, setIsEditing } = props;
   const { roleColor } = props;
-  const { role } = props;
+  const { role, staff } = props;
   const { setData } = props;
   const { signin, user } = useAuth();
 
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [newBio, setNewBio] = React.useState(bio);
+  const [newBio, setNewBio] = React.useState(bio ?? "");
   const [profileImage, setProfileImage] = React.useState();
   const [previewImageURL, setPreviewImageURL] =
     React.useState(profile_image_url);
@@ -43,6 +38,8 @@ function EditProfile(props) {
   const [password, setPassword] = React.useState("");
 
   const allowBioEdit = role === "Physician" || role === "Radiologist";
+  const noProfileChanges =
+    ("" === newBio || bio === newBio) && previewImageURL === profile_image_url;
 
   const handleEmailUpdate = () => {
     // Validate and send the new email to the API
@@ -212,74 +209,134 @@ function EditProfile(props) {
   };
 
   return (
-    <Container fluid className="p-0">
-      {isEditing && (
-        <h2 className="my-5" style={{ color: "#0d6efd" }}>
-          Editing profile
-        </h2>
-      )}
-      <Card className="p-4" style={{ backgroundColor: "#adb5bd" }}>
-        <Card.Title className="mb-3">
-          <div
-            className={`d-flex align-items-center ${
-              isEditing ? "justify-content-normal" : "justify-content-between"
-            }`}
-          >
-            <img
-              src={
-                previewImageURL || profile_image_url || default_profile_picture
-              }
-              alt="User Profile"
-              className="me-3"
-            />
-            {isEditing ? (
-              <div className="d-flex align-self-end">
-                <input
-                  id="fileInput"
-                  type="file"
-                  onChange={handleChange}
-                  onClick={(e) => (e.target.value = null)}
-                  style={{ border: "none", display: "none" }}
-                />
-                <label
-                  className="btn"
-                  style={{ backgroundColor: "#0dcaf0", color: "#fff" }}
-                  htmlFor="fileInput"
-                >
-                  Change Picture
-                </label>
-              </div>
-            ) : (
-              <Button
-                style={{ border: roleColor, backgroundColor: roleColor }}
-                onClick={() => setIsEditing((prev) => !prev)}
-              >
-                Edit Profile
-              </Button>
-            )}
-          </div>
-        </Card.Title>
-        {allowBioEdit && (
-          <Card.Body className="rounded" style={{ backgroundColor: "#fff" }}>
-            {isEditing ? (
-              <Form.Control
-                as="textarea"
-                value={newBio}
-                onChange={handleBioInput}
-                ref={bioFormRef}
-                rows={12}
+    <>
+      <Banner text="Profile Information" />
+      <Container fluid style={{ background: "#f2f9ff" }} className="p-5">
+        <h3 className="mb-5" style={{ color: "#0d6efd" }}>
+          Editing Profile
+        </h3>
+        <Container
+          className="rounded p-3 shadow-sm"
+          style={{ backgroundColor: "#fff", overflow: "auto" }}
+          fluid
+        >
+          <Row className="mb-3">
+            <Col className="text-center" xs={12} md={2}>
+              <img
+                src={
+                  previewImageURL ||
+                  profile_image_url ||
+                  default_profile_picture
+                }
+                alt="User Profile"
+                className="profile-image"
               />
-            ) : (
-              <Card.Text style={{ color: "#68717a", whiteSpace: "pre-wrap" }}>
-                {bio || ""}
-              </Card.Text>
-            )}
-          </Card.Body>
-        )}
-      </Card>
-      {isEditing && (
-        <Row className="my-5 text-center">
-          <Col xs={12}>
+            </Col>
+            <Col xs={12} md={10}>
+              <Row className="mb-3 align-items-center">
+                <Col xs={5} md={2}>
+                  <strong>Name</strong>
+                </Col>
+                <Col className="fw-semibold">
+                  {(props.profile.title || "") +
+                    " " +
+                    props.profile.first_name +
+                    " " +
+                    props.profile.last_name}
+                </Col>
+              </Row>
+              <Row className="mb-3 align-items-center">
+                <Col xs={5} md={2}>
+                  <strong>Email</strong>
+                </Col>
+                <Col className="fw-semibold">{props.profile.email}</Col>
+              </Row>
+              <Row className="mb-3 align-items-center">
+                <Col xs={5} md={2}>
+                  <strong>DOB</strong>
+                </Col>
+                <Col className="fw-semibold">{props.profile.dob}</Col>
+                <Col className="text-end">
+                  <div className="rounded-pill">
+                    <input
+                      id="fileInput"
+                      type="file"
+                      onChange={handleChange}
+                      onClick={(e) => (e.target.value = null)}
+                      style={{
+                        border: "#838383",
+                        backgroundColor: "#838383",
+                        display: "none",
+                      }}
+                    />
+                    <label
+                      className="btn rounded-pill"
+                      style={{
+                        border: "#838383",
+                        backgroundColor: "#838383",
+                        color: "#fff",
+                      }}
+                      htmlFor="fileInput"
+                    >
+                      Change Picture
+                    </label>
+                  </div>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col xs={12} className="my-4" style={{ height: "2px" }} />
+              </Row>
+
+              {role === "Physician" ? (
+                <Row className="mt-5">
+                  <Col xs={5} md={3}>
+                    <strong>Your Patients</strong>
+                  </Col>
+                  <Col>
+                    <Link
+                      className="fw-semibold"
+                      variant="primary"
+                      to="/patients"
+                      style={{ textDecoration: "none", color: "#7749f8" }}
+                    >
+                      View My Patients
+                    </Link>
+                  </Col>
+                </Row>
+              ) : (
+                <ProfileStaff staff={staff} />
+              )}
+            </Col>
+          </Row>
+
+          {allowBioEdit && (
+            <Row>
+              <Col>
+                {isEditing ? (
+                  <Form.Control
+                    className="rounded p-3 shadow-sm"
+                    as="textarea"
+                    value={newBio}
+                    onChange={handleBioInput}
+                    ref={bioFormRef}
+                    rows={12}
+                  />
+                ) : (
+                  <p style={{ color: "#68717a", whiteSpace: "pre-wrap" }}>
+                    {bio || ""}
+                  </p>
+                )}
+              </Col>
+            </Row>
+          )}
+        </Container>
+
+        <Row
+          className="text-center"
+          style={{ marginTop: "8rem", marginBottom: "10rem" }}
+        >
+          <Col xs={8} md={6}>
             <Button
               className="mx-2"
               style={{ border: "#6c757d", backgroundColor: "#6c757d" }}
@@ -291,6 +348,7 @@ function EditProfile(props) {
               className="mx-2"
               style={{ border: roleColor, backgroundColor: roleColor }}
               onClick={handleSaveProfile}
+              disabled={noProfileChanges || uploading}
             >
               Save Changes{" "}
               {uploading && (
@@ -299,61 +357,65 @@ function EditProfile(props) {
             </Button>
           </Col>
         </Row>
-      )}
-      {isEditing && (role === "Patient" || role === "Physician") && (
-        <Row>
-          <Col xs={12}>
-            <Button onClick={() => setShowEmailUpdate(true)}>
-              Update Email
-            </Button>
-          </Col>
-        </Row>
-      )}
 
-      {showEmailUpdate && (
-        <Row>
-          <Col xs={12}>
-            <h2 className="my-4" style={{ color: "#0d6efd" }}>
-              Change Email
-            </h2>
-            <p className="mb-4">
-              To update your email, please provide your new email and current
-              password.
-            </p>
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>New Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  value={newEmail}
-                  onChange={(e) => setNewEmail(e.target.value)}
-                  placeholder="Enter your new email"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password to confirm"
-                />
-
-                {emailError && <div className="text-danger">{emailError}</div>}
-              </Form.Group>
-              <Button onClick={handleEmailUpdate}>Confirm</Button>
-              <Button
-                className="ms-4"
-                variant="secondary"
-                onClick={() => setShowEmailUpdate(false)}
-              >
-                Cancel
+        {isEditing && (role === "Patient" || role === "Physician") && (
+          <Row>
+            <Col xs={12}>
+              <Button onClick={() => setShowEmailUpdate(true)}>
+                Update Email
               </Button>
-            </Form>
-          </Col>
-        </Row>
-      )}
-    </Container>
+            </Col>
+          </Row>
+        )}
+
+        {showEmailUpdate && (
+          <Row>
+            <Col xs={12}>
+              <h2 className="my-4" style={{ color: "#0d6efd" }}>
+                Change Email
+              </h2>
+              <p className="mb-4">
+                To update your email, please provide your new email and current
+                password.
+              </p>
+              <Form>
+                <Form.Group className="mb-3">
+                  <Form.Label>New Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    placeholder="Enter your new email"
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password to confirm"
+                  />
+
+                  {emailError && (
+                    <div className="text-danger">{emailError}</div>
+                  )}
+                </Form.Group>
+                <Button onClick={handleEmailUpdate}>Confirm</Button>
+                <Button
+                  className="ms-4"
+                  variant="secondary"
+                  onClick={() => setShowEmailUpdate(false)}
+                >
+                  Cancel
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+        )}
+      </Container>
+      <WebFooter />
+    </>
   );
 }
 
