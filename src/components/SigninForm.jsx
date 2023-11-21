@@ -58,6 +58,8 @@ function SigninForm() {
         </h2>
         <Signin />
         <div className="option">
+        <span className="titleSpans">Forgot password?</span>
+        <a className="forgotPasswordLink" onClick={() => navigate("/reset-password")}>Reset Password</a>
           <a onClick={() => navigate("/signup")}>New User?</a>
           <a onClick={() => navigate("/signup")}>
             <button>Sign Up</button>
