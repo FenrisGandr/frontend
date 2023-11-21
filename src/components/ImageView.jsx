@@ -199,11 +199,10 @@ export default function ImageView() {
   };
   const divider = {
     height: "3px",
-    width: "47.5%",
+    width: "50%",
     backgroundColor: "#0D6EFD",
-    marginTop: "150px",
+    marginTop: "3.5rem",
     marginBottom: "50px",
-    marginLeft: "5rem",
   };
   const spanStyle = {
     marginLeft: "100px",
@@ -351,7 +350,9 @@ export default function ImageView() {
 
       {role === "Patient" && (
         <div>
-          <div style={divider}></div>
+          <div style={{marginLeft: "80px"}}>
+            <div style={divider} />
+          </div>
           <DashboardSection
             role={role}
             isLast={false}
@@ -362,9 +363,11 @@ export default function ImageView() {
             buttonDescription={"Get a Second Opinion"}
             buttonLink={"/secondopinion"}
           />
-          <h2 style={{marginLeft:" 5rem", color:"#0D6EFD" }}>Rate your Radiologist!</h2>
-          <p style={{marginLeft:" 5rem",fontSize: '20px',}}>Leaving a rating helps patients like you have an easier time choosing the radiologist that is right for them! Please give your opinion on your chosen radiologist. </p>
-          <button onClick={handleShow} style={{marginLeft:" 5rem", marginBottom:" 15rem",width: '250px',height: '50px',backgroundColor: roleColor(role),color: 'white',borderRadius: '5px',fontSize:'20px'}}>Leave a Review</button>
+          <div style={{marginLeft: "80px", marginTop: "50px", marginBottom: "15rem" }}>
+            <h2 style={{marginBottom:" 1.5rem", color:"#0D6EFD" }}>Rate your radiologist!</h2>
+            <p style={{marginTop:" 1rem", marginBottom: "1rem", fontSize: '20px',}}>Leaving a rating helps patients like you have an easier time choosing the radiologist that is right for them! Please give your opinion on your chosen radiologist. </p>
+            <button onClick={handleShow} style={{margin:" 1.25rem", width: '250px',height: '50px',backgroundColor: roleColor(role),color: 'white',borderRadius: '5px',fontSize:'20px'}}>Leave a Review</button>
+          </div>
 
         {/*below is the code for the popup that allows the user to submit a rating */}
         <Modal
