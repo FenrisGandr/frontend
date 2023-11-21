@@ -24,7 +24,8 @@ function EditProfile(props) {
   const { profile_image_url, bio } = props.profile;
   const { roleColor } = props;
   const { role } = props;
-  const { user } = useAuth();
+  const { setData } = props;
+  const { signin, user } = useAuth();
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [newBio, setNewBio] = React.useState(bio);
@@ -35,7 +36,68 @@ function EditProfile(props) {
   const [uploading, setUploading] = React.useState(false);
   const bioFormRef = React.useRef(null);
 
+  const [showEmailUpdate, setShowEmailUpdate] = React.useState(false);
+  const [newEmail, setNewEmail] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
+
+  const [password, setPassword] = React.useState("");
+
   const allowBioEdit = role === "Physician" || role === "Radiologist";
+
+  const handleEmailUpdate = () => {
+    // Validate and send the new email to the API
+    // Reset the state and close the form after update
+    if (!newEmail || !password) {
+      setEmailError("Email and password are required.");
+      return;
+    }
+    setEmailError("");
+
+    // API request to update email using PUT method
+    fetch(API_URL + "/api/user/email", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + user.accessToken,
+      },
+      body: JSON.stringify({
+        email: newEmail,
+        password: password,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        // Handle successful response
+        if (data.success) {
+          // Update the profile state
+          setData((prev) => ({
+            ...prev,
+            profile: {
+              ...prev.profile,
+              email: newEmail,
+            },
+          }));
+
+          // Sign in to refresh auth context
+          signin(newEmail, password);
+
+          alert(data.msg);
+          setShowEmailUpdate(false);
+          setNewEmail(""); // Optionally reset the email state
+          setPassword(""); // Optionally reset the password state
+        } else {
+          setEmailError(data.errors[0].msg || "Failed to update email.");
+          setPassword("");
+        }
+      })
+      .catch((error) => {
+        // Handle network errors or other unexpected errors
+        setEmailError(error.message);
+        setPassword("");
+      });
+  };
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -235,6 +297,59 @@ function EditProfile(props) {
                 <Spinner size="sm" className="mx-2" animation="border" />
               )}
             </Button>
+          </Col>
+        </Row>
+      )}
+      {isEditing && (role === "Patient" || role === "Physician") && (
+        <Row>
+          <Col xs={12}>
+            <Button onClick={() => setShowEmailUpdate(true)}>
+              Update Email
+            </Button>
+          </Col>
+        </Row>
+      )}
+
+      {showEmailUpdate && (
+        <Row>
+          <Col xs={12}>
+            <h2 className="my-4" style={{ color: "#0d6efd" }}>
+              Change Email
+            </h2>
+            <p className="mb-4">
+              To update your email, please provide your new email and current
+              password.
+            </p>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>New Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  placeholder="Enter your new email"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password to confirm"
+                />
+
+                {emailError && <div className="text-danger">{emailError}</div>}
+              </Form.Group>
+              <Button onClick={handleEmailUpdate}>Confirm</Button>
+              <Button
+                className="ms-4"
+                variant="secondary"
+                onClick={() => setShowEmailUpdate(false)}
+              >
+                Cancel
+              </Button>
+            </Form>
           </Col>
         </Row>
       )}

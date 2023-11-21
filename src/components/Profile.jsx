@@ -151,6 +151,7 @@ function Profile() {
           profile={data.profile}
           roleColor={roleColor(role)}
           role={role}
+          setData={setData}
         />
         <Row style={{ marginTop: "16rem" }}>
           <Col xs={4}>
