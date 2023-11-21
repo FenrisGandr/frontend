@@ -233,7 +233,12 @@ export default function ImageView() {
   return (
     <>
       <Banner text={"Medical Image Center"} />
-      <h2 style={introStyle}>{state.image.name}'s Medical Images</h2>
+      <h2 style={introStyle}>
+        {state.image.name ||
+          state.image.first_name + " " + state.image.last_name ||
+          user.displayName}
+        's Medical Images
+      </h2>
 
       <div style={containerStyle}>
         <div>
