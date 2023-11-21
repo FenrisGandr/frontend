@@ -11,6 +11,7 @@ import { useNotifications } from "../contexts/NotificationContext";
 import "./NavBar.css";
 
 const SHOW_TITLE_PATHS = ["/dashboard", "/profile"];
+const HIDE_NAVBAR_PATHS = ["/signin", "/signup", "/reset-password"];
 
 const NavBar = React.memo(() => {
   const location = useLocation();
@@ -75,7 +76,7 @@ const NavBar = React.memo(() => {
     }
   }, [location.pathname]);
 
-  if (location.pathname === "/signin" || location.pathname === "/signup") {
+  if (HIDE_NAVBAR_PATHS.includes(location.pathname)) {
     return <></>;
   }
 
