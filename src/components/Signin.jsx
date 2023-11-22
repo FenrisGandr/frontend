@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { API_URL } from "../constants.js";
 
 function Signin() {
   const {
@@ -15,6 +16,7 @@ function Signin() {
       password: "",
     },
   });
+  const { state } = useLocation();
   const navigate = useNavigate();
   const { signin } = useAuth();
 
@@ -22,28 +24,43 @@ function Signin() {
     const email = data.email.toLowerCase().trim();
     const password = data.password;
 
-    await signin(email, password)
-      .then((data) => {
-        if (data.errors) {
-          setError("root.serverError", {
-            message: "The email or password is incorrect",
-          });
-        } else {
-          navigate("/dashboard");
-        }
-      })
-      .catch((err) => {
-        if (err.code === "auth/invalid-login-credentials") {
-          setError("root.serverError", {
-            message: "The email or password is incorrect",
-          });
-        } else {
-          setError("root.serverError", {
-            message: "Something went wrong",
-          });
-        }
-        console.error(err);
+    const permitted = await fetch(API_URL + "/api/auth/portal/" + state.role, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    }).then((res) => {
+      if (res.status === 200) return true;
+      else return false;
+    });
+
+    if (permitted) {
+      await signin(email, password)
+        .then((data) => {
+          if (data.errors) {
+            setError("root.serverError", {
+              message: "The email or password is incorrect",
+            });
+          } else {
+            navigate("/dashboard");
+          }
+        })
+        .catch((err) => {
+          if (err.code === "auth/invalid-login-credentials") {
+            setError("root.serverError", {
+              message: "The email or password is incorrect",
+            });
+          } else {
+            setError("root.serverError", {
+              message: "Something went wrong",
+            });
+          }
+          console.error(err);
+        });
+    } else {
+      setError("root.serverError", {
+        message: "Unable to login through this portal",
       });
+    }
   };
 
   const loginButtonStyle = {
@@ -101,10 +118,13 @@ function Signin() {
             style={{ width: "16rem" }}
             autoComplete="true"
           />
-          {errors.password && <p>{errors.password.message}</p>}
         </div>
-        <div className="form-row">
-          {errors.root ? <p>{errors.root.serverError.message}</p> : null}
+        <div className="form-row text-center">
+          {errors.root ? (
+            <p className="text-danger fw-semibold mb-0">
+              {errors.root.serverError.message}
+            </p>
+          ) : null}
           <button
             style={loginButtonStyle}
             title="Signin"
