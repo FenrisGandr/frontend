@@ -1,16 +1,23 @@
 import React from "react";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
+import default_profile_picture from "../assets/default_profile_picture.png";
 import { API_URL } from "../constants";
 import { useAuth } from "../contexts/AuthContext";
+import Banner from "./Banner";
 import EditProfile from "./EditProfile";
+import "./Profile.css";
+import ProfileStaff from "./ProfileStaff";
 import WebFooter from "./WebFooter";
 
 function Profile() {
   const { role, user } = useAuth();
 
   const [data, setData] = React.useState(null);
+
+  const [isEditing, setIsEditing] = React.useState(false);
 
   const roleColor = (role) => {
     switch (role) {
@@ -47,129 +54,128 @@ function Profile() {
       </Row>
     );
 
-  return (
-    <>
-      <Container fluid style={{ background: "#f2f9ff" }} className="p-5">
-        <h2 className="mb-5" style={{ color: "#0d6efd" }}>
-          Your Profile
-        </h2>
-        <Row className="mb-3">
-          <Col xs={5} md={4}>
-            <strong>Name</strong>
-          </Col>
-          <Col className="fw-semibold">
-            {(data.profile.title || "") +
-              " " +
-              data.profile.first_name +
-              " " +
-              data.profile.last_name}
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col xs={5} md={4}>
-            <strong>DOB</strong>
-          </Col>
-          <Col className="fw-semibold">{data.profile.dob}</Col>
-        </Row>
-        <Row className="mb-3">
-          <Col xs={5} md={4}>
-            <strong>Email</strong>
-          </Col>
-          <Col className="fw-semibold">{data.profile.email}</Col>
-        </Row>
-        <Row>
-          <Col
-            xs={12}
-            md={8}
-            className="my-4"
-            style={{ height: "2px", backgroundColor: "#0D6EFD" }}
-          />
-        </Row>
-        {role !== "Patient" ? (
-          <Row className="my-3">
-            <Col xs={5} md={4}>
-              <strong>Your Patients</strong>
-            </Col>
-            <Col>
-              <Link
-                className="fw-semibold"
-                variant="primary"
-                to="/patients"
-                style={{ textDecoration: "none", color: "#7749f8" }}
+  if (isEditing) {
+    return (
+      <EditProfile
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        profile={data.profile}
+        roleColor={roleColor(role)}
+        role={role}
+        setData={setData}
+        staff={data.staff}
+      />
+    );
+  } else {
+    return (
+      <>
+        <Banner text="Profile Information" />
+        <Container fluid style={{ background: "#f2f9ff" }} className="p-5">
+          <h3 className="mb-5" style={{ color: "#0d6efd" }}>
+            My Profile
+          </h3>
+          <Container
+            className="rounded p-3 shadow-sm"
+            style={{ backgroundColor: "#fff", overflow: "auto" }}
+            fluid
+          >
+            <Row className="mb-3">
+              <Col className="text-center" xs={12} md={2}>
+                <Image
+                  fluid
+                  src={
+                    data.profile.profile_image_url || default_profile_picture
+                  }
+                  alt="User Profile"
+                  className="profile-image"
+                />
+              </Col>
+              <Col xs={12} md={10}>
+                <Row className="mb-3 align-items-center">
+                  <Col xs={5} md={2}>
+                    <strong>Name</strong>
+                  </Col>
+                  <Col className="fw-semibold">
+                    {(data.profile.title || "") +
+                      " " +
+                      data.profile.first_name +
+                      " " +
+                      data.profile.last_name}
+                  </Col>
+                </Row>
+                <Row className="mb-3 align-items-center">
+                  <Col xs={5} md={2}>
+                    <strong>Email</strong>
+                  </Col>
+                  <Col className="fw-semibold">{data.profile.email}</Col>
+                </Row>
+                <Row className="mb-3 align-items-center">
+                  <Col xs={5} md={2}>
+                    <strong>DOB</strong>
+                  </Col>
+                  <Col className="fw-semibold">{data.profile.dob}</Col>
+                  <Col className="text-end">
+                    <Button
+                      className="rounded-pill"
+                      style={{
+                        border: "#838383",
+                        backgroundColor: "#838383",
+                      }}
+                      onClick={() => setIsEditing((prev) => !prev)}
+                    >
+                      Edit Profile
+                    </Button>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col xs={12} className="my-4" style={{ height: "2px" }} />
+                </Row>
+
+                {role !== "Patient" ? (
+                  <Row className="my-5">
+                    <Col xs={5} md={3}>
+                      <strong>Your Patients</strong>
+                    </Col>
+                    <Col>
+                      <Link
+                        className="fw-semibold"
+                        variant="primary"
+                        to="/patients"
+                        style={{ textDecoration: "none", color: "#7749f8" }}
+                      >
+                        View My Patients
+                      </Link>
+                    </Col>
+                  </Row>
+                ) : (
+                  <ProfileStaff staff={data.staff} />
+                )}
+              </Col>
+            </Row>
+          </Container>
+          <Row
+            className="text-center"
+            style={{ marginTop: "8rem", marginBottom: "10rem" }}
+          >
+            <Col xs={8} md={6}>
+              <Button
+                as={Link}
+                to="/dashboard"
+                style={{
+                  border: roleColor(role),
+                  backgroundColor: roleColor(role),
+                }}
               >
-                View My Patients
-              </Link>
+                Back to Dashboard
+              </Button>
             </Col>
           </Row>
-        ) : (
-          <>
-            {data.staff.length > 0 &&
-              data.staff.map((staff) => {
-                const fullName =
-                  (staff.title || "") +
-                  " " +
-                  staff.first_name +
-                  " " +
-                  staff.last_name;
-                if (staff.role === "PHYSICIAN") {
-                  return (
-                    <Row key={staff.uid} className="my-3">
-                      <Col xs={5} md={4}>
-                        <strong>Physician</strong>
-                      </Col>
-                      <Col className="fw-semibold">
-                        <span>{fullName}</span>
-                      </Col>
-                    </Row>
-                  );
-                }
-              })}
-            {data.staff.length > 0 &&
-                  data.staff.map((staff) => {
-                    const fullName =
-                      (staff.title || "") +
-                      " " +
-                      staff.first_name +
-                      " " +
-                      staff.last_name;
-                if (staff.role === "RADIOLOGIST") {
-                  return (
-                    <Row className="my-3" key={staff.uid}>
-                      <Col xs={5} md={4}>
-                        <strong>Radiologist</strong>
-                      </Col>
-                      <Col className="fw-semibold">
-                        <span>{fullName}</span>
-                      </Col>
-                    </Row>
-                  );
-                }
-              })}
-          </>
-        )}
-        <EditProfile
-          profile={data.profile}
-          roleColor={roleColor(role)}
-          role={role}
-        />
-        <Row style={{ marginTop: "16rem" }}>
-          <Col xs={4}>
-            <Button
-              as={Link}
-              to="/dashboard"
-              style={{
-                border: roleColor(role),
-                backgroundColor: roleColor(role),
-              }}
-            >
-              Back to Dashboard
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-      <WebFooter />
-    </>
-  );
+        </Container>
+        <WebFooter />
+      </>
+    );
+  }
 }
 
 export default Profile;

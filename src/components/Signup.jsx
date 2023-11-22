@@ -357,6 +357,7 @@ function Signup() {
                     },
                   })}
                   aria-invalid={errors.password ? "true" : "false"}
+                  autoComplete="current-password"
                 />
                 {errors.password && (
                   <p style={errorText}>{errors.password.message}</p>

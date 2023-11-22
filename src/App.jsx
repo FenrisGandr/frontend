@@ -14,6 +14,7 @@ import Profile from "./components/Profile";
 import SecondOpinion from "./components/SecondOpinion";
 import SigninForm from "./components/SigninForm";
 import Signup from "./components/Signup";
+import ResetPassword from './components/ResetPassword';
 import ViewPatients from "./components/ViewPatients";
 import { FirebaseAuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
@@ -31,6 +32,7 @@ function App() {
               <Route path="profile" Component={Profile} />
               <Route path="signin" Component={SigninForm} />
               <Route path="signup" Component={Signup} />
+              <Route path="reset-password" Component={ResetPassword} />
               <Route path="secondopinion" Component={SecondOpinion} />
               <Route path="patients" Component={ViewPatients} />
               <Route path="notifications" Component={Notifications} />

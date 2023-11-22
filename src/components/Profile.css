@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+  .profile-image {
+    width: 100% !important;
+    max-width: 150px !important;
+    margin-bottom: 1.25rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .profile-image {
+    width: 100% !important;
+    max-width: 150px !important;
+  }
+}

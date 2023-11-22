@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
 import Signin from "./Signin";
 import "./Form.css";
@@ -58,10 +58,12 @@ function SigninForm() {
         </h2>
         <Signin />
         <div className="option">
-          <a onClick={() => navigate("/signup")}>New User?</a>
-          <a onClick={() => navigate("/signup")}>
-            <button>Sign Up</button>
-          </a>
+        <span className="titleSpans">Forgot password?</span>
+        <Link to="/reset-password" className="forgotPasswordLink">Reset Password</Link>
+        <a onClick={() => navigate("/signup")}>New User?</a>
+        <Link to="/signup">
+          <button>Sign Up</button>
+        </Link>
         </div>
       </div>
     </div>
