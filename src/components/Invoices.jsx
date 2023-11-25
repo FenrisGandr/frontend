@@ -76,7 +76,11 @@ function Invoices() {
                     <Col>
                       <p className="fs-4">Invoice created</p>
                       <p className="fw-light">
-                        {new Date(invoice.createdAt).toLocaleString("en-US")}
+                        {new Date(invoice.createdAt + "UTC").toLocaleString(
+                          [],
+                          { dateStyle: "short", timeStyle: "short" },
+                          "en-US"
+                        )}
                       </p>
                     </Col>
                     <Col className="fs-4 fw-bold">${invoice.amount}</Col>
@@ -85,7 +89,14 @@ function Invoices() {
                         invoice.paid ? "text-success" : "text-danger"
                       }`}
                     >
-                      {invoice.paid ? "paid" : <div><p>unpaid</p><p>click to pay</p></div>}
+                      {invoice.paid ? (
+                        "paid"
+                      ) : (
+                        <div>
+                          <p>unpaid</p>
+                          <p>click to pay</p>
+                        </div>
+                      )}
                     </Col>
                   </Row>
                 </ListGroup.Item>
