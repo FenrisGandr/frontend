@@ -1,4 +1,6 @@
 import { useState } from "react";
+import default_profile_picture from "../../assets/default_profile_picture.png";
+
 const SecondOpinionSection = ({
   picture,
   doctorAndTitle,
@@ -58,7 +60,7 @@ const SecondOpinionSection = ({
     <div style={wrapperStyle}>
       <div style={initialContainer}>
         <div>
-          <img src={picture} alt="Your Image" style={docImageStyle} />
+          <img src={picture || default_profile_picture} alt="Your Image" style={docImageStyle} />
         </div>
         <div style={{ width: "350px" }}>
 
