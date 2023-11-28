@@ -232,7 +232,7 @@ function ImageUpload() {
               placeholder="Enter your notes here"
               as="textarea"
               rows={5}
-              onChange={(e) => {setNotes(e.target.value); console.log(notes);} }
+              onChange={(e) => {setNotes(e.target.value);} }
             />
           <Form.Label htmlFor="patientSelect" className="mb-3">
             Want to recommend a radiologist? Choose a radiologist below.
