@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
@@ -153,6 +153,34 @@ function Profile() {
                 )}
               </Col>
             </Row>
+            {role === "Radiologist" && (
+              <>
+                <p style={{ color: "#68717a", whiteSpace: "pre-wrap" }}>
+                  <Form.Control
+                    name="bio"
+                    className="rounded p-3 bg-body"
+                    as="textarea"
+                    value={data.profile.bio}
+                    rows={12}
+                    disabled
+                    style={{ resize: "none" }}
+                  />
+                </p>
+                <Row className="my-3 align-items-center">
+                  <Col xs={12} className="fw-semibold text-md-start">
+                    {data.profile.allow_ratings ? (
+                      <p className="mb-0 fs-5">
+                        You are opted in to our rating system.
+                      </p>
+                    ) : (
+                      <p className="mb-0 fs-5">
+                        You are opted out from our rating system
+                      </p>
+                    )}
+                  </Col>
+                </Row>
+              </>
+            )}
           </Container>
           <Row
             className="text-center"

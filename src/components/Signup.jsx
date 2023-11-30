@@ -14,6 +14,7 @@ import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
 import { API_URL } from "../constants";
 import { useAuth } from "../contexts/AuthContext";
 
+
 function Signup() {
   const {
     register,
