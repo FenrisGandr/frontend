@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Banner from "./Banner";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import checkmark from "../assets/checkmark.png";
 
 function Invoices() {
   const [pageIsFocus, setPageIsFocus] = useState(false);
@@ -92,11 +93,15 @@ function Invoices() {
                       }`}
                     >
                       {invoice.paid ? (
-                        "paid"
+                        <img
+                        src={checkmark} className="checkmark"
+                        alt="checkmark"
+                        style={{width: '50px', height: '50px'}}
+                        />
                       ) : (
                         <div>
                           <p>unpaid</p>
-                          <p>click to pay</p>
+                          <p><i>click to pay</i></p>
                         </div>
                       )}
                     </Col>
