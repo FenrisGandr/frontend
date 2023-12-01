@@ -64,8 +64,6 @@ function Profile() {
         role={role}
         setData={setData}
         staff={data.staff}
-        optStatus = {optStatus}
-        setOptStatus = {setOptStatus}
       />
     );
   } else {
