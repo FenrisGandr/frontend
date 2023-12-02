@@ -4,7 +4,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import React from "react";
+import React, {useState, useEffect, useRef} from 'react';
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
@@ -14,6 +14,8 @@ import { useAuth } from "../contexts/AuthContext";
 import Banner from "./Banner";
 import ProfileStaff from "./ProfileStaff";
 import WebFooter from "./WebFooter";
+import Modal from './Modal'; // Import the Modal component
+
 
 function EditProfile(props) {
   const { profile_image_url, bio, allow_ratings } = props.profile;
@@ -22,6 +24,11 @@ function EditProfile(props) {
   const { role, staff } = props;
   const { setData } = props;
   const { signin, user } = useAuth();
+  const [showEmailModal, setShowEmailModal] = useState(false); // State to manage modal visibility
+
+  const handleShowEmailModal = () => setShowEmailModal(true);
+  const handleCloseEmailModal = () => setShowEmailModal(false);
+
 
   const [newBio, setNewBio] = React.useState(bio ?? "");
   const [profileImage, setProfileImage] = React.useState();
@@ -91,6 +98,9 @@ function EditProfile(props) {
           setShowEmailUpdate(false);
           setNewEmail(""); // Optionally reset the email state
           setPassword(""); // Optionally reset the password state
+
+          handleCloseEmailModal();
+
         } else {
           setEmailError(data.errors[0].msg || "Failed to update email.");
           setPassword("");
@@ -216,7 +226,45 @@ function EditProfile(props) {
       );
     }
   };
-
+  const emailUpdateForm = (
+       <div style={{ padding: "50px" }}> {/* Add padding here */}
+      <h3 className="mb-5" style={{ color: "#0d6efd" }}>
+      Change Email
+      </h3>
+      <p>To update your email, please provide your new email and current password</p>
+      <Form>
+      <Form.Group className="mb-3">
+        <Form.Label>New Email</Form.Label>
+        <Form.Control
+          type="email"
+          value={newEmail}
+          onChange={(e) => setNewEmail(e.target.value)}
+          placeholder="Enter your new email"
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password to confirm"
+        />
+        {emailError && (
+          <div className="text-danger">{emailError}</div>
+        )}
+      </Form.Group>
+      <Button onClick={handleEmailUpdate}>Confirm</Button>
+      <Button
+        className="ms-4"
+        variant="secondary"
+        onClick={handleCloseEmailModal} // Close the modal on cancel
+      >
+        Cancel
+      </Button>
+    </Form>
+    </div>
+  );
   return (
     <>
       <Banner text="Profile Information" />
@@ -267,27 +315,44 @@ function EditProfile(props) {
                 <Col className="fw-semibold">{props.profile.dob}</Col>
                 <Col className="text-end">
                   <div className="rounded-pill">
-                    <input
-                      id="fileInput"
-                      type="file"
-                      onChange={handleChange}
-                      onClick={(e) => (e.target.value = null)}
-                      style={{
-                        border: "#838383",
-                        backgroundColor: "#838383",
-                        display: "none",
-                      }}
-                    />
-                    <label
-                      className="btn rounded-pill"
-                      style={{
-                        border: "#838383",
-                        backgroundColor: "#838383",
-                        color: "#fff",
-                      }}
-                      htmlFor="fileInput"
-                    >
-                      Change Picture
+
+                  { (role === "Patient" || role === "Physician") && (
+                  <Button
+                  onClick={handleShowEmailModal}
+                  style={{
+                    border: "#838383",
+                    backgroundColor: "#838383",
+                    color: "#fff",
+                    marginBottom: "10px",
+                    borderRadius: "20px",
+                  }}
+                  >
+                    Update Email  
+                  </Button>
+                  )}
+                  </div>
+                  <div className="rounded-pill">
+                <input
+                id="fileInput"
+                 type="file"
+                onChange={handleChange}
+                 onClick={(e) => (e.target.value = null)}
+                style={{
+                  border: "#838383",
+                  backgroundColor: "#838383",
+                  display: "none",
+              }}
+              />
+              <label
+                className="btn rounded-pill"
+                style={{
+                 border: "#838383",
+                 backgroundColor: "#838383",
+                color: "#fff",
+           }}
+        htmlFor="fileInput"
+      >
+        Change Picture
                     </label>
                   </div>
                 </Col>
@@ -401,61 +466,10 @@ function EditProfile(props) {
           </Col>
         </Row>
 
-        {isEditing && (role === "Patient" || role === "Physician") && (
-          <Row>
-            <Col xs={12}>
-              <Button onClick={() => setShowEmailUpdate(true)}>
-                Update Email
-              </Button>
-            </Col>
-          </Row>
-        )}
-
-        {showEmailUpdate && (
-          <Row>
-            <Col xs={12}>
-              <h2 className="my-4" style={{ color: "#0d6efd" }}>
-                Change Email
-              </h2>
-              <p className="mb-4">
-                To update your email, please provide your new email and current
-                password.
-              </p>
-              <Form>
-                <Form.Group className="mb-3">
-                  <Form.Label>New Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    value={newEmail}
-                    onChange={(e) => setNewEmail(e.target.value)}
-                    placeholder="Enter your new email"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password to confirm"
-                  />
-
-                  {emailError && (
-                    <div className="text-danger">{emailError}</div>
-                  )}
-                </Form.Group>
-                <Button onClick={handleEmailUpdate}>Confirm</Button>
-                <Button
-                  className="ms-4"
-                  variant="secondary"
-                  onClick={() => setShowEmailUpdate(false)}
-                >
-                  Cancel
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-        )}
+        <Modal showModal={showEmailModal} setShowModal={setShowEmailModal}>
+          {emailUpdateForm}
+        </Modal>
+     
       </Container>
       <WebFooter />
     </>
