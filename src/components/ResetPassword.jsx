@@ -4,6 +4,7 @@ import { API_URL } from "../constants";
 import RadioArchiveLogo from "../assets/RadioArchiveLogo.png";
 import checkmark from "../assets/checkmark.png";
 import "./Form.css";
+import { Container, Row, Col, Image } from 'react-bootstrap';
 
 function ResetPassword() {
   const [email, setEmail] = useState("");
@@ -30,6 +31,20 @@ function ResetPassword() {
         }
       })
       .catch((err) => console.error(err));
+  };
+  const formStyle = {
+    width: "16rem",
+  };
+
+  const loginButtonStyle = {
+    backgroundColor: "#0D6EFD",
+    borderRadius: "3px",
+    width: "16rem",
+    border: "none",
+    color: "white",
+    height: "35px",
+    marginTop: "1rem",
+    marginBottom: "1.25rem",
   };
 
   function LogoHeader() {
