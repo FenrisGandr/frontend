@@ -41,6 +41,7 @@ const ContactPage = () => {
             justifyContent: 'space-evenly',
             width: '100%',
             fontSize: '20px',
+            marginRight: '3rem',
         },
         infoBlock: {
             textAlign: 'center', 

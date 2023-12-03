@@ -19,6 +19,7 @@ import ViewPatients from "./components/ViewPatients";
 import { FirebaseAuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import ContactPage from "./components/ContactPage";
+import WorkWithUs from "./components/WorkWithUs";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
               <Route path="imageview" Component={ImageView} />
               <Route path="invoices" Component={Invoices} />
               <Route path="contact" Component={ContactPage} />
+              <Route path="work" Component={WorkWithUs} />
               <Route
                 path="upload"
                 element={

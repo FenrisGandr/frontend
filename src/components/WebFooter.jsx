@@ -50,7 +50,7 @@ function WebFooter(){
             
         </div>
         <div style={{ textAlign: 'center', paddingTop: '20px' }}>
-                <span style={linkStyle}>Work for Us</span>
+                <Link to="/work" style={linkStyle}>Work with Us</Link>
                 <span style={dividerStyle}>|</span>
                 <Link to="/contact" style={linkStyle}>Contact Us</Link>
             </div>
