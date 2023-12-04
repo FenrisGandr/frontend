@@ -41,11 +41,7 @@ function Notifications() {
       case "Radiologist":
         return "#E35D6A";
     }
-  };
-
-  const handleRefresh = () => {
-    window.location.href = window.location.href;
-  };
+   };
   ///////////////////////////////////////////css
   const buttonStyles = {
     height: "50px",
@@ -79,13 +75,6 @@ function Notifications() {
 
       <Container className="my-5">
         <div style={buttonContainer}>
-          <button
-            onClick={handleRefresh}
-            style={{ ...buttonStyles, width: "100px" }}
-          >
-            ⟳
-          </button>
-
           <div style={markingButtons}>
             <button
               onClick={handleMarkAsRead}
@@ -98,11 +87,6 @@ function Notifications() {
               style={{ ...buttonStyles, width: "180px", marginLeft: "20px" }}
             >
               Mark All as Read
-            </button>
-            <button
-              style={{ ...buttonStyles, width: "180px", marginLeft: "20px" }}
-            >
-              Mute
             </button>
           </div>
         </div>
