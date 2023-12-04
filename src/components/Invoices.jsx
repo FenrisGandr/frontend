@@ -6,7 +6,6 @@ import { useAuth } from "../contexts/AuthContext";
 import Banner from "./Banner";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import checkmark from "../assets/checkmark.png";
 
 function Invoices() {
   const [pageIsFocus, setPageIsFocus] = useState(false);
